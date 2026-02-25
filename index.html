@@ -156,12 +156,19 @@
         /* --- 카드 및 리스트 스타일 --- */
         .word-row {
             display: flex;
-            align-items: flex-start;
+            flex-direction: column; /* 단어그룹과 훈련박스를 위아래로 분리 */
+            gap: 15px;
             margin-bottom: 25px;
             padding-bottom: 25px;
             border-bottom: 1px solid #efebe9;
-            flex-wrap: wrap;
+        }
+
+        .word-top-section {
+            display: flex;
+            flex-direction: row; /* 단어카드와 음절카드를 나란히 배치 */
+            align-items: flex-start;
             gap: 20px;
+            flex-wrap: wrap; /* 모바일에서 공간 부족 시 자연스럽게 줄바꿈 */
         }
 
         /* 1. 단어 카드 & 오디오 버튼 래퍼 */
@@ -220,20 +227,13 @@
             transform: scale(0.95);
         }
 
-        /* 오른쪽 영역 그룹 */
-        .right-content-group {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            gap: 12px;
-        }
-
-        /* 발음기호 카드 컨테이너 */
+        /* 2. 발음기호 카드 컨테이너 */
         .syllable-container {
             display: flex;
             align-items: center;
             gap: 10px;
             flex-wrap: wrap;
+            flex: 1; /* 가로 남은 공간을 모두 차지하도록 설정 */
         }
 
         .syllable-card {
@@ -259,16 +259,19 @@
             color: #8d6e63;
         }
 
-        /* 2. 발음 연습 순서 (Step by Step) 스타일 - 글씨체 통일 및 크기 소폭 조정 */
+        /* 3. 발음 연습 순서 (Step by Step) 스타일 - 아래로 넓게 배치 */
         .step-box {
             background-color: #fff3e0;
-            border-left: 4px solid #ffcc80;
-            padding: 10px 15px;
-            border-radius: 0 8px 8px 0;
+            border-left: 5px solid #ffcc80;
+            padding: 12px 18px;
+            border-radius: 8px; 
             font-size: 1.1rem; 
             color: #5d4037;
-            font-family: "Lucida Sans Unicode", "Arial Unicode MS", monospace; /* 음절 카드와 동일하게 변경 */
+            font-family: "Lucida Sans Unicode", "Arial Unicode MS", monospace; 
             line-height: 1.6;
+            width: 100%; /* 가로 전체 너비 사용 */
+            box-sizing: border-box;
+            word-break: break-word; /* 긴 텍스트가 밖으로 나가지 않도록 줄바꿈 */
         }
         .step-highlight {
             color: #e65100;
@@ -313,235 +316,235 @@
             day: 24,
             title: "Schwa (슈와)",
             words: [
-                { w: "a<b>tten</b>tion", ipa_parts: ["ə", "ten", "ʃən"], stress: 1, steps: "t - te - ten - ten.ʃən - [əˈten.ʃən]" },
-                { w: "a<b>vai</b>lable", ipa_parts: ["ə", "veɪ", "lə", "bl"], stress: 1, steps: "v - veɪ - veɪ.lə - veɪ.lə.bl - [əˈveɪ.lə.bl]" },
-                { w: "a<b>gain</b>", ipa_parts: ["ə", "ɡen"], stress: 1, steps: "ɡ - ɡe - ɡen - [əˈɡen]" },
-                { w: "<b>diff</b>erent", ipa_parts: ["dɪf", "ər", "ənt"], stress: 0, steps: "d - dɪ - dɪf - dɪf.ər - [ˈdɪf.ər.ənt]" },
-                { w: "<b>his</b>tory", ipa_parts: ["hɪs", "tər", "i"], stress: 0, steps: "h - hɪ - hɪs - hɪs.tər - [ˈhɪs.tər.i]" },
-                { w: "<b>pro</b>blem", ipa_parts: ["prɑː", "bləm"], stress: 0, steps: "p - prɑː - [ˈprɑː.bləm]" },
-                { w: "so<b>ci</b>ety", ipa_parts: ["sə", "saɪ", "ə", "ti"], stress: 1, steps: "s - saɪ - saɪ.ə - saɪ.ə.ti - [səˈsaɪ.ə.ti]" },
-                { w: "po<b>sit</b>ion", ipa_parts: ["pə", "zɪʃ", "ən"], stress: 1, steps: "z - zɪ - zɪʃ - zɪʃ.ən - [pəˈzɪʃ.ən]" },
-                { w: "<b>pa</b>sta", ipa_parts: ["pɑː", "stə"], stress: 0, steps: "p - pɑː - [ˈpɑː.stə]" },
-                { w: "<b>piz</b>za", ipa_parts: ["piːt", "sə"], stress: 0, steps: "p - piː - piːt - [ˈpiːt.sə]" }
+                { w: "a<b>tten</b>tion", ipa_parts: ["ə", "ten", "ʃən"], stress: 1, steps: "t - t - te - te - ten - ten.ʃən - [əˈten.ʃən]" },
+                { w: "a<b>vai</b>lable", ipa_parts: ["ə", "veɪ", "lə", "bl"], stress: 1, steps: "v - v - veɪ - veɪ - veɪ.lə - veɪ.lə.bl - [əˈveɪ.lə.bl]" },
+                { w: "a<b>gain</b>", ipa_parts: ["ə", "ɡen"], stress: 1, steps: "ɡ - ɡ - ɡe - ɡe - ɡen - [əˈɡen]" },
+                { w: "<b>diff</b>erent", ipa_parts: ["dɪf", "ər", "ənt"], stress: 0, steps: "d - d - dɪ - dɪ - dɪf - dɪf.ər - [ˈdɪf.ər.ənt]" },
+                { w: "<b>his</b>tory", ipa_parts: ["hɪs", "tər", "i"], stress: 0, steps: "h - h - hɪ - hɪ - hɪs - hɪs.tər - [ˈhɪs.tər.i]" },
+                { w: "<b>pro</b>blem", ipa_parts: ["prɑː", "bləm"], stress: 0, steps: "p - p - prɑː - prɑː - [ˈprɑː.bləm]" },
+                { w: "so<b>ci</b>ety", ipa_parts: ["sə", "saɪ", "ə", "ti"], stress: 1, steps: "s - s - saɪ - saɪ - saɪ.ə - saɪ.ə.ti - [səˈsaɪ.ə.ti]" },
+                { w: "po<b>sit</b>ion", ipa_parts: ["pə", "zɪʃ", "ən"], stress: 1, steps: "z - z - zɪ - zɪ - zɪʃ - zɪʃ.ən - [pəˈzɪʃ.ən]" },
+                { w: "<b>pa</b>sta", ipa_parts: ["pɑː", "stə"], stress: 0, steps: "p - p - pɑː - pɑː - [ˈpɑː.stə]" },
+                { w: "<b>piz</b>za", ipa_parts: ["piːt", "sə"], stress: 0, steps: "p - p - piː - piː - piːt - [ˈpiːt.sə]" }
             ]
         },
         {
             day: 25,
             title: "H Sound",
             words: [
-                { w: "<b>ham</b>ster", ipa_parts: ["hæm", "stər"], stress: 0, steps: "h - hæ - hæm - [ˈhæm.stər]" },
-                { w: "<b>ho</b>bby", ipa_parts: ["hɑː", "bi"], stress: 0, steps: "h - hɑː - [ˈhɑː.bi]" },
-                { w: "be<b>hind</b>", ipa_parts: ["bɪ", "haɪnd"], stress: 1, steps: "h - haɪ - haɪnd - [bɪˈhaɪnd]" },
-                { w: "re<b>heat</b>", ipa_parts: ["riː", "hiːt"], stress: 1, steps: "h - hiː - hiːt - [riːˈhiːt]" },
-                { w: "un<b>happ</b>y", ipa_parts: ["ʌn", "hæp", "i"], stress: 1, steps: "h - hæ - hæp - hæp.i - [ʌnˈhæp.i]" }
+                { w: "<b>ham</b>ster", ipa_parts: ["hæm", "stər"], stress: 0, steps: "h - h - hæ - hæ - hæm - [ˈhæm.stər]" },
+                { w: "<b>ho</b>bby", ipa_parts: ["hɑː", "bi"], stress: 0, steps: "h - h - hɑː - hɑː - [ˈhɑː.bi]" },
+                { w: "be<b>hind</b>", ipa_parts: ["bɪ", "haɪnd"], stress: 1, steps: "h - h - haɪ - haɪ - haɪnd - [bɪˈhaɪnd]" },
+                { w: "re<b>heat</b>", ipa_parts: ["riː", "hiːt"], stress: 1, steps: "h - h - hiː - hiː - hiːt - [riːˈhiːt]" },
+                { w: "un<b>happ</b>y", ipa_parts: ["ʌn", "hæp", "i"], stress: 1, steps: "h - h - hæ - hæ - hæp - hæp.i - [ʌnˈhæp.i]" }
             ]
         },
         {
             day: 26,
             title: "P / B",
             words: [
-                { w: "<b>peo</b>ple", ipa_parts: ["piː", "pəl"], stress: 0, steps: "p - piː - [ˈpiː.pəl]" },
-                { w: "<b>pa</b>per", ipa_parts: ["peɪ", "pər"], stress: 0, steps: "p - peɪ - [ˈpeɪ.pər]" },
-                { w: "<b>pu</b>ppy", ipa_parts: ["pʌ", "pi"], stress: 0, steps: "p - pʌ - [ˈpʌ.pi]" },
-                { w: "Ja<b>pan</b>", ipa_parts: ["dʒə", "pæn"], stress: 1, steps: "p - pæ - pæn - [dʒəˈpæn]" },
-                { w: "<b>happ</b>y", ipa_parts: ["hæp", "i"], stress: 0, steps: "h - hæ - hæp - [ˈhæp.i]" },
-                { w: "<b>ba</b>con", ipa_parts: ["beɪ", "kən"], stress: 0, steps: "b - beɪ - [ˈbeɪ.kən]" },
-                { w: "<b>bus</b>y", ipa_parts: ["bɪz", "i"], stress: 0, steps: "b - bɪ - bɪz - [ˈbɪz.i]" },
-                { w: "<b>ba</b>by", ipa_parts: ["beɪ", "bi"], stress: 0, steps: "b - beɪ - [ˈbeɪ.bi]" },
-                { w: "a<b>bout</b>", ipa_parts: ["ə", "baʊt"], stress: 1, steps: "b - baʊ - baʊt - [əˈbaʊt]" },
-                { w: "o<b>bey</b>", ipa_parts: ["ə", "beɪ"], stress: 1, steps: "b - beɪ - [əˈbeɪ]" }
+                { w: "<b>peo</b>ple", ipa_parts: ["piː", "pəl"], stress: 0, steps: "p - p - piː - piː - [ˈpiː.pəl]" },
+                { w: "<b>pa</b>per", ipa_parts: ["peɪ", "pər"], stress: 0, steps: "p - p - peɪ - peɪ - [ˈpeɪ.pər]" },
+                { w: "<b>pu</b>ppy", ipa_parts: ["pʌ", "pi"], stress: 0, steps: "p - p - pʌ - pʌ - [ˈpʌ.pi]" },
+                { w: "Ja<b>pan</b>", ipa_parts: ["dʒə", "pæn"], stress: 1, steps: "p - p - pæ - pæ - pæn - [dʒəˈpæn]" },
+                { w: "<b>happ</b>y", ipa_parts: ["hæp", "i"], stress: 0, steps: "h - h - hæ - hæ - hæp - [ˈhæp.i]" },
+                { w: "<b>ba</b>con", ipa_parts: ["beɪ", "kən"], stress: 0, steps: "b - b - beɪ - beɪ - [ˈbeɪ.kən]" },
+                { w: "<b>bus</b>y", ipa_parts: ["bɪz", "i"], stress: 0, steps: "b - b - bɪ - bɪ - bɪz - [ˈbɪz.i]" },
+                { w: "<b>ba</b>by", ipa_parts: ["beɪ", "bi"], stress: 0, steps: "b - b - beɪ - beɪ - [ˈbeɪ.bi]" },
+                { w: "a<b>bout</b>", ipa_parts: ["ə", "baʊt"], stress: 1, steps: "b - b - baʊ - baʊ - baʊt - [əˈbaʊt]" },
+                { w: "o<b>bey</b>", ipa_parts: ["ə", "beɪ"], stress: 1, steps: "b - b - beɪ - beɪ - [əˈbeɪ]" }
             ]
         },
         {
             day: 27,
             title: "K / G",
             words: [
-                { w: "<b>ki</b>wi", ipa_parts: ["kiː", "wiː"], stress: 0, steps: "k - kiː - [ˈkiː.wiː]" },
-                { w: "be<b>cause</b>", ipa_parts: ["bɪ", "kɑ:z"], stress: 1, steps: "k - kɑ: - kɑ:z - [bɪˈkɑ:z]" },
-                { w: "<b>kit</b>chen", ipa_parts: ["kɪtʃ", "ən"], stress: 0, steps: "k - kɪ - kɪtʃ - [ˈkɪtʃ.ən]" },
-                { w: "be<b>come</b>", ipa_parts: ["bɪ", "kʌm"], stress: 1, steps: "k - kʌ - kʌm - [bɪˈkʌm]" },
-                { w: "<b>book</b>ing", ipa_parts: ["bʊk", "ɪŋ"], stress: 0, steps: "b - bʊ - bʊk - [ˈbʊk.ɪŋ]" },
-                { w: "<b>gum</b>my", ipa_parts: ["ɡʌm", "i"], stress: 0, steps: "ɡ - ɡʌ - ɡʌm - [ˈɡʌm.i]" },
-                { w: "good<b>bye</b>", ipa_parts: ["ɡʊd", "baɪ"], stress: 1, steps: "b - baɪ - [ɡʊdˈbaɪ]" },
-                { w: "be<b>gin</b>", ipa_parts: ["bɪ", "ɡɪn"], stress: 1, steps: "ɡ - ɡɪ - ɡɪn - [bɪˈɡɪn]" },
-                { w: "a<b>gain</b>", ipa_parts: ["ə", "ɡen"], stress: 1, steps: "ɡ - ɡe - ɡen - [əˈɡen]" },
-                { w: "a<b>gainst</b>", ipa_parts: ["ə", "ɡenst"], stress: 1, steps: "ɡ - ɡe - ɡenst - [əˈɡenst]" }
+                { w: "<b>ki</b>wi", ipa_parts: ["kiː", "wiː"], stress: 0, steps: "k - k - kiː - kiː - [ˈkiː.wiː]" },
+                { w: "be<b>cause</b>", ipa_parts: ["bɪ", "kɑ:z"], stress: 1, steps: "k - k - kɑ: - kɑ: - kɑ:z - [bɪˈkɑ:z]" },
+                { w: "<b>kit</b>chen", ipa_parts: ["kɪtʃ", "ən"], stress: 0, steps: "k - k - kɪ - kɪ - kɪtʃ - [ˈkɪtʃ.ən]" },
+                { w: "be<b>come</b>", ipa_parts: ["bɪ", "kʌm"], stress: 1, steps: "k - k - kʌ - kʌ - kʌm - [bɪˈkʌm]" },
+                { w: "<b>book</b>ing", ipa_parts: ["bʊk", "ɪŋ"], stress: 0, steps: "b - b - bʊ - bʊ - bʊk - [ˈbʊk.ɪŋ]" },
+                { w: "<b>gum</b>my", ipa_parts: ["ɡʌm", "i"], stress: 0, steps: "ɡ - ɡ - ɡʌ - ɡʌ - ɡʌm - [ˈɡʌm.i]" },
+                { w: "good<b>bye</b>", ipa_parts: ["ɡʊd", "baɪ"], stress: 1, steps: "b - b - baɪ - baɪ - [ɡʊdˈbaɪ]" },
+                { w: "be<b>gin</b>", ipa_parts: ["bɪ", "ɡɪn"], stress: 1, steps: "ɡ - ɡ - ɡɪ - ɡɪ - ɡɪn - [bɪˈɡɪn]" },
+                { w: "a<b>gain</b>", ipa_parts: ["ə", "ɡen"], stress: 1, steps: "ɡ - ɡ - ɡe - ɡe - ɡen - [əˈɡen]" },
+                { w: "a<b>gainst</b>", ipa_parts: ["ə", "ɡenst"], stress: 1, steps: "ɡ - ɡ - ɡe - ɡe - ɡenst - [əˈɡenst]" }
             ]
         },
         {
             day: 28,
             title: "True T/D, Flap T/D",
             words: [
-                { w: "<b>ta</b>ble", ipa_parts: ["teɪ", "bəl"], stress: 0, steps: "t - teɪ - [ˈteɪ.bəl]" },
-                { w: "fif<b>teen</b>", ipa_parts: ["fɪf", "tiːn"], stress: 1, steps: "t - tiː - tiːn - [fɪfˈtiːn]" },
-                { w: "<b>ti</b>ny", ipa_parts: ["taɪ", "ni"], stress: 0, steps: "t - taɪ - [ˈtaɪ.ni]" },
-                { w: "<b>doc</b>tor", ipa_parts: ["dɑːk", "tər"], stress: 0, steps: "d - dɑː - dɑːk - [ˈdɑːk.tər]" },
-                { w: "to<b>day</b>", ipa_parts: ["tə", "deɪ"], stress: 1, steps: "d - deɪ - [təˈdeɪ]" },
-                { w: "<b>bet</b>ter", ipa_parts: ["bet", "ər"], stress: 0, steps: "b - be - bet - [ˈbet.ər]" },
-                { w: "<b>ti</b>tle", ipa_parts: ["taɪ", "təl"], stress: 0, steps: "t - taɪ - [ˈtaɪ.təl]" },
-                { w: "<b>la</b>dy", ipa_parts: ["leɪ", "di"], stress: 0, steps: "l - leɪ - [ˈleɪ.di]" },
-                { w: "<b>stud</b>y", ipa_parts: ["stʌd", "i"], stress: 0, steps: "s - stʌ - stʌd - [ˈstʌd.i]" },
-                { w: "<b>ladd</b>er", ipa_parts: ["læd", "ər"], stress: 0, steps: "l - læ - læd - [ˈlæd.ər]" }
+                { w: "<b>ta</b>ble", ipa_parts: ["teɪ", "bəl"], stress: 0, steps: "t - t - teɪ - teɪ - [ˈteɪ.bəl]" },
+                { w: "fif<b>teen</b>", ipa_parts: ["fɪf", "tiːn"], stress: 1, steps: "t - t - tiː - tiː - tiːn - [fɪfˈtiːn]" },
+                { w: "<b>ti</b>ny", ipa_parts: ["taɪ", "ni"], stress: 0, steps: "t - t - taɪ - taɪ - [ˈtaɪ.ni]" },
+                { w: "<b>doc</b>tor", ipa_parts: ["dɑːk", "tər"], stress: 0, steps: "d - d - dɑː - dɑː - dɑːk - [ˈdɑːk.tər]" },
+                { w: "to<b>day</b>", ipa_parts: ["tə", "deɪ"], stress: 1, steps: "d - d - deɪ - deɪ - [təˈdeɪ]" },
+                { w: "<b>bet</b>ter", ipa_parts: ["bet", "ər"], stress: 0, steps: "b - b - be - be - bet - [ˈbet.ər]" },
+                { w: "<b>ti</b>tle", ipa_parts: ["taɪ", "təl"], stress: 0, steps: "t - t - taɪ - taɪ - [ˈtaɪ.təl]" },
+                { w: "<b>la</b>dy", ipa_parts: ["leɪ", "di"], stress: 0, steps: "l - l - leɪ - leɪ - [ˈleɪ.di]" },
+                { w: "<b>stud</b>y", ipa_parts: ["stʌd", "i"], stress: 0, steps: "s - s - stʌ - stʌ - stʌd - [ˈstʌd.i]" },
+                { w: "<b>ladd</b>er", ipa_parts: ["læd", "ər"], stress: 0, steps: "l - l - læ - læ - læd - [ˈlæd.ər]" }
             ]
         },
         {
             day: 29,
             title: "Stop T/D, No T",
             words: [
-                { w: "<b>cur</b>tain", ipa_parts: ["kɜ:r", "tən"], stress: 0, steps: "k - kɜ:r - [ˈkɜ:r.tən]" },
-                { w: "<b>fit</b>ness", ipa_parts: ["fɪt", "nəs"], stress: 0, steps: "f - fɪ - fɪt - [ˈfɪt.nəs]" },
-                { w: "<b>butt</b>on", ipa_parts: ["bʌt", "ən"], stress: 0, steps: "b - bʌ - bʌt - [ˈbʌt.ən]" },
-                { w: "good<b>will</b>", ipa_parts: ["ɡʊd", "wɪl"], stress: 1, steps: "w - wɪ - wɪl - [ɡʊdˈwɪl]" },
-                { w: "<b>feed</b>back", ipa_parts: ["fiːd", "bæk"], stress: 0, steps: "f - fiː - fiːd - [ˈfiːd.bæk]" },
-                { w: "<b>in</b>ternet", ipa_parts: ["ɪn", "tər", "net"], stress: 0, steps: "ɪ - ɪn - ɪn.tər - [ˈɪn.tər.net]" },
-                { w: "<b>cen</b>ter", ipa_parts: ["sen", "tər"], stress: 0, steps: "s - se - sen - [ˈsen.tər]" },
-                { w: "<b>per</b>fectly", ipa_parts: ["pɜ:r", "fɪk", "li"], stress: 0, steps: "p - pɜ:r - pɜ:r.fɪk - [ˈpɜ:r.fɪk.li]" },
-                { w: "co<b>rrect</b>ly", ipa_parts: ["kə", "rek", "li"], stress: 1, steps: "r - re - rek - rek.li - [kəˈrek.li]" },
-                { w: "<b>in</b>terview", ipa_parts: ["ɪn", "tər", "vjuː"], stress: 0, steps: "ɪ - ɪn - ɪn.tər - [ˈɪn.tər.vjuː]" }
+                { w: "<b>cur</b>tain", ipa_parts: ["kɜ:r", "tən"], stress: 0, steps: "k - k - kɜ:r - kɜ:r - [ˈkɜ:r.tən]" },
+                { w: "<b>fit</b>ness", ipa_parts: ["fɪt", "nəs"], stress: 0, steps: "f - f - fɪ - fɪ - fɪt - [ˈfɪt.nəs]" },
+                { w: "<b>butt</b>on", ipa_parts: ["bʌt", "ən"], stress: 0, steps: "b - b - bʌ - bʌ - bʌt - [ˈbʌt.ən]" },
+                { w: "good<b>will</b>", ipa_parts: ["ɡʊd", "wɪl"], stress: 1, steps: "w - w - wɪ - wɪ - wɪl - [ɡʊdˈwɪl]" },
+                { w: "<b>feed</b>back", ipa_parts: ["fiːd", "bæk"], stress: 0, steps: "f - f - fiː - fiː - fiːd - [ˈfiːd.bæk]" },
+                { w: "<b>in</b>ternet", ipa_parts: ["ɪn", "tər", "net"], stress: 0, steps: "ɪ - ɪ - ɪn - ɪn - ɪn.tər - [ˈɪn.tər.net]" },
+                { w: "<b>cen</b>ter", ipa_parts: ["sen", "tər"], stress: 0, steps: "s - s - se - se - sen - [ˈsen.tər]" },
+                { w: "<b>per</b>fectly", ipa_parts: ["pɜ:r", "fɪk", "li"], stress: 0, steps: "p - p - pɜ:r - pɜ:r - pɜ:r.fɪk - [ˈpɜ:r.fɪk.li]" },
+                { w: "co<b>rrect</b>ly", ipa_parts: ["kə", "rek", "li"], stress: 1, steps: "r - r - re - re - rek - rek.li - [kəˈrek.li]" },
+                { w: "<b>in</b>terview", ipa_parts: ["ɪn", "tər", "vjuː"], stress: 0, steps: "ɪ - ɪ - ɪn - ɪn - ɪn.tər - [ˈɪn.tər.vjuː]" }
             ]
         },
         {
             day: 30,
             title: "S / Z",
             words: [
-                { w: "<b>steak</b>", ipa_parts: ["steɪk"], stress: 0, steps: "s - steɪ - [steɪk]" },
-                { w: "<b>sis</b>ter", ipa_parts: ["sɪs", "tər"], stress: 0, steps: "s - sɪ - sɪs - [ˈsɪs.tər]" },
-                { w: "<b>sum</b>mer", ipa_parts: ["sʌm", "ər"], stress: 0, steps: "s - sʌ - sʌm - [ˈsʌm.ər]" },
-                { w: "suc<b>cess</b>", ipa_parts: ["sək", "ses"], stress: 1, steps: "s - se - ses - [səkˈses]" },
-                { w: "re<b>spond</b>", ipa_parts: ["rɪ", "spɑːnd"], stress: 1, steps: "s - spɑː - spɑːnd - [rɪˈspɑːnd]" },
-                { w: "<b>zip</b>per", ipa_parts: ["zɪp", "ər"], stress: 0, steps: "z - zɪ - zɪp - [ˈzɪp.ər]" },
-                { w: "<b>ze</b>bra", ipa_parts: ["ziː", "brə"], stress: 0, steps: "z - ziː - [ˈziː.brə]" },
-                { w: "un<b>zip</b>", ipa_parts: ["ʌn", "zɪp"], stress: 1, steps: "z - zɪ - zɪp - [ʌnˈzɪp]" },
-                { w: "<b>cou</b>sin", ipa_parts: ["kʌz", "ən"], stress: 0, steps: "k - kʌ - kʌz - [ˈkʌz.ən]" },
-                { w: "<b>cheese</b>", ipa_parts: ["tʃiːz"], stress: 0, steps: "tʃ - tʃiː - [tʃiːz]" }
+                { w: "<b>steak</b>", ipa_parts: ["steɪk"], stress: 0, steps: "s - s - steɪ - steɪ - [steɪk]" },
+                { w: "<b>sis</b>ter", ipa_parts: ["sɪs", "tər"], stress: 0, steps: "s - s - sɪ - sɪ - sɪs - [ˈsɪs.tər]" },
+                { w: "<b>sum</b>mer", ipa_parts: ["sʌm", "ər"], stress: 0, steps: "s - s - sʌ - sʌ - sʌm - [ˈsʌm.ər]" },
+                { w: "suc<b>cess</b>", ipa_parts: ["sək", "ses"], stress: 1, steps: "s - s - se - se - ses - [səkˈses]" },
+                { w: "re<b>spond</b>", ipa_parts: ["rɪ", "spɑːnd"], stress: 1, steps: "s - s - spɑː - spɑː - spɑːnd - [rɪˈspɑːnd]" },
+                { w: "<b>zip</b>per", ipa_parts: ["zɪp", "ər"], stress: 0, steps: "z - z - zɪ - zɪ - zɪp - [ˈzɪp.ər]" },
+                { w: "<b>ze</b>bra", ipa_parts: ["ziː", "brə"], stress: 0, steps: "z - z - ziː - ziː - [ˈziː.brə]" },
+                { w: "un<b>zip</b>", ipa_parts: ["ʌn", "zɪp"], stress: 1, steps: "z - z - zɪ - zɪ - zɪp - [ʌnˈzɪp]" },
+                { w: "<b>cou</b>sin", ipa_parts: ["kʌz", "ən"], stress: 0, steps: "k - k - kʌ - kʌ - kʌz - [ˈkʌz.ən]" },
+                { w: "<b>cheese</b>", ipa_parts: ["tʃiːz"], stress: 0, steps: "tʃ - tʃ - tʃiː - tʃiː - [tʃiːz]" }
             ]
         },
         {
             day: 31,
             title: "SH / ZH",
             words: [
-                { w: "sham<b>poo</b>", ipa_parts: ["ʃæm", "puː"], stress: 1, steps: "p - puː - [ʃæmˈpuː]" },
-                { w: "<b>shad</b>ow", ipa_parts: ["ʃæd", "oʊ"], stress: 0, steps: "ʃ - ʃæ - ʃæd - [ˈʃæd.oʊ]" },
-                { w: "<b>show</b>er", ipa_parts: ["ʃaʊ", "ər"], stress: 0, steps: "ʃ - ʃaʊ - [ˈʃaʊ.ər]" },
-                { w: "<b>tiss</b>ue", ipa_parts: ["tɪʃ", "uː"], stress: 0, steps: "t - tɪ - tɪʃ - [ˈtɪʃ.uː]" },
-                { w: "<b>fin</b>ish", ipa_parts: ["fɪn", "ɪʃ"], stress: 0, steps: "f - fɪ - fɪn - [ˈfɪn.ɪʃ]" },
-                { w: "<b>vis</b>ion", ipa_parts: ["vɪʒ", "ən"], stress: 0, steps: "v - vɪ - vɪʒ - [ˈvɪʒ.ən]" },
-                { w: "<b>a</b>sia", ipa_parts: ["eɪ", "ʒə"], stress: 0, steps: "eɪ - [ˈeɪ.ʒə]" },
-                { w: "<b>lei</b>sure", ipa_parts: ["li:ʒ", "ər"], stress: 0, steps: "l - li: - li:ʒ - [ˈli:ʒ.ər]" },
-                { w: "ma<b>ssage</b>", ipa_parts: ["mə", "sɑ:ʒ"], stress: 1, steps: "s - sɑ: - sɑ:ʒ - [məˈsɑ:ʒ]" },
-                { w: "ga<b>rage</b>", ipa_parts: ["ɡə", "rɑ:ʒ"], stress: 1, steps: "r - rɑ: - rɑ:ʒ - [ɡəˈrɑ:ʒ]" }
+                { w: "sham<b>poo</b>", ipa_parts: ["ʃæm", "puː"], stress: 1, steps: "p - p - puː - puː - [ʃæmˈpuː]" },
+                { w: "<b>shad</b>ow", ipa_parts: ["ʃæd", "oʊ"], stress: 0, steps: "ʃ - ʃ - ʃæ - ʃæ - ʃæd - [ˈʃæd.oʊ]" },
+                { w: "<b>show</b>er", ipa_parts: ["ʃaʊ", "ər"], stress: 0, steps: "ʃ - ʃ - ʃaʊ - ʃaʊ - [ˈʃaʊ.ər]" },
+                { w: "<b>tiss</b>ue", ipa_parts: ["tɪʃ", "uː"], stress: 0, steps: "t - t - tɪ - tɪ - tɪʃ - [ˈtɪʃ.uː]" },
+                { w: "<b>fin</b>ish", ipa_parts: ["fɪn", "ɪʃ"], stress: 0, steps: "f - f - fɪ - fɪ - fɪn - [ˈfɪn.ɪʃ]" },
+                { w: "<b>vis</b>ion", ipa_parts: ["vɪʒ", "ən"], stress: 0, steps: "v - v - vɪ - vɪ - vɪʒ - [ˈvɪʒ.ən]" },
+                { w: "<b>a</b>sia", ipa_parts: ["eɪ", "ʒə"], stress: 0, steps: "eɪ - eɪ - [ˈeɪ.ʒə]" },
+                { w: "<b>lei</b>sure", ipa_parts: ["li:ʒ", "ər"], stress: 0, steps: "l - l - li: - li: - li:ʒ - [ˈli:ʒ.ər]" },
+                { w: "ma<b>ssage</b>", ipa_parts: ["mə", "sɑ:ʒ"], stress: 1, steps: "s - s - sɑ: - sɑ: - sɑ:ʒ - [məˈsɑ:ʒ]" },
+                { w: "ga<b>rage</b>", ipa_parts: ["ɡə", "rɑ:ʒ"], stress: 1, steps: "r - r - rɑ: - rɑ: - rɑ:ʒ - [ɡəˈrɑ:ʒ]" }
             ]
         },
         {
             day: 32,
             title: "F / V",
             words: [
-                { w: "<b>fin</b>ger", ipa_parts: ["fɪŋ", "ɡər"], stress: 0, steps: "f - fɪ - fɪŋ - [ˈfɪŋ.ɡər]" },
-                { w: "<b>fa</b>mous", ipa_parts: ["feɪ", "məs"], stress: 0, steps: "f - feɪ - [ˈfeɪ.məs]" },
-                { w: "be<b>fore</b>", ipa_parts: ["bɪ", "fɔːr"], stress: 1, steps: "f - fɔː - fɔːr - [bɪˈfɔːr]" },
-                { w: "<b>co</b>ffee", ipa_parts: ["kɑ:", "fi"], stress: 0, steps: "k - kɑ: - [ˈkɑ:.fi]" },
-                { w: "<b>leaf</b>", ipa_parts: ["liːf"], stress: 0, steps: "l - liː - [liːf]" },
-                { w: "vac<b>cine</b>", ipa_parts: ["væk", "siːn"], stress: 1, steps: "s - siː - siːn - [vækˈsiːn]" },
-                { w: "<b>vill</b>age", ipa_parts: ["vɪl", "ɪdʒ"], stress: 0, steps: "v - vɪ - vɪl - [ˈvɪl.ɪdʒ]" },
-                { w: "pro<b>vide</b>", ipa_parts: ["prə", "vaɪd"], stress: 1, steps: "v - vaɪ - vaɪd - [prəˈvaɪd]" },
-                { w: "<b>dev</b>il", ipa_parts: ["dev", "əl"], stress: 0, steps: "d - de - dev - [ˈdev.əl]" },
-                { w: "<b>leave</b>", ipa_parts: ["liːv"], stress: 0, steps: "l - liː - [liːv]" }
+                { w: "<b>fin</b>ger", ipa_parts: ["fɪŋ", "ɡər"], stress: 0, steps: "f - f - fɪ - fɪ - fɪŋ - [ˈfɪŋ.ɡər]" },
+                { w: "<b>fa</b>mous", ipa_parts: ["feɪ", "məs"], stress: 0, steps: "f - f - feɪ - feɪ - [ˈfeɪ.məs]" },
+                { w: "be<b>fore</b>", ipa_parts: ["bɪ", "fɔːr"], stress: 1, steps: "f - f - fɔː - fɔː - fɔːr - [bɪˈfɔːr]" },
+                { w: "<b>co</b>ffee", ipa_parts: ["kɑ:", "fi"], stress: 0, steps: "k - k - kɑ: - kɑ: - [ˈkɑ:.fi]" },
+                { w: "<b>leaf</b>", ipa_parts: ["liːf"], stress: 0, steps: "l - l - liː - liː - [liːf]" },
+                { w: "vac<b>cine</b>", ipa_parts: ["væk", "siːn"], stress: 1, steps: "s - s - siː - siː - siːn - [vækˈsiːn]" },
+                { w: "<b>vill</b>age", ipa_parts: ["vɪl", "ɪdʒ"], stress: 0, steps: "v - v - vɪ - vɪ - vɪl - [ˈvɪl.ɪdʒ]" },
+                { w: "pro<b>vide</b>", ipa_parts: ["prə", "vaɪd"], stress: 1, steps: "v - v - vaɪ - vaɪ - vaɪd - [prəˈvaɪd]" },
+                { w: "<b>dev</b>il", ipa_parts: ["dev", "əl"], stress: 0, steps: "d - d - de - de - dev - [ˈdev.əl]" },
+                { w: "<b>leave</b>", ipa_parts: ["liːv"], stress: 0, steps: "l - l - liː - liː - [liːv]" }
             ]
         },
         {
             day: 33,
             title: "TH(θ) / TH(ð)",
             words: [
-                { w: "<b>thir</b>ty", ipa_parts: ["θɜ:r", "ti"], stress: 0, steps: "θ - θɜ:r - [ˈθɜ:r.ti]" },
-                { w: "<b>thank</b>ful", ipa_parts: ["θæŋk", "fəl"], stress: 0, steps: "θ - θæ - θæŋk - [ˈθæŋk.fəl]" },
-                { w: "<b>birth</b>day", ipa_parts: ["bɜ:rθ", "deɪ"], stress: 0, steps: "b - bɜ:r - bɜ:rθ - [ˈbɜ:rθ.deɪ]" },
-                { w: "re<b>think</b>", ipa_parts: ["riː", "θɪŋk"], stress: 1, steps: "θ - θɪ - θɪŋk - [riːˈθɪŋk]" },
-                { w: "<b>mouth</b>", ipa_parts: ["maʊθ"], stress: 0, steps: "m - maʊ - [maʊθ]" },
-                { w: "<b>there</b>fore", ipa_parts: ["ðer", "fɔːr"], stress: 0, steps: "ð - ðer - [ˈðer.fɔːr]" },
-                { w: "them<b>selves</b>", ipa_parts: ["ðəm", "selvz"], stress: 1, steps: "s - se - selvz - [ðəmˈselvz]" },
-                { w: "<b>weath</b>er", ipa_parts: ["weð", "ər"], stress: 0, steps: "w - we - weð - [ˈweð.ər]" },
-                { w: "a<b>noth</b>er", ipa_parts: ["ə", "nʌð", "ər"], stress: 1, steps: "n - nʌ - nʌð - nʌð.ər - [əˈnʌð.ər]" },
-                { w: "<b>bathe</b>", ipa_parts: ["beɪð"], stress: 0, steps: "b - beɪ - [beɪð]" }
+                { w: "<b>thir</b>ty", ipa_parts: ["θɜ:r", "ti"], stress: 0, steps: "θ - θ - θɜ:r - θɜ:r - [ˈθɜ:r.ti]" },
+                { w: "<b>thank</b>ful", ipa_parts: ["θæŋk", "fəl"], stress: 0, steps: "θ - θ - θæ - θæ - θæŋk - [ˈθæŋk.fəl]" },
+                { w: "<b>birth</b>day", ipa_parts: ["bɜ:rθ", "deɪ"], stress: 0, steps: "b - b - bɜ:r - bɜ:r - bɜ:rθ - [ˈbɜ:rθ.deɪ]" },
+                { w: "re<b>think</b>", ipa_parts: ["riː", "θɪŋk"], stress: 1, steps: "θ - θ - θɪ - θɪ - θɪŋk - [riːˈθɪŋk]" },
+                { w: "<b>mouth</b>", ipa_parts: ["maʊθ"], stress: 0, steps: "m - m - maʊ - maʊ - [maʊθ]" },
+                { w: "<b>there</b>fore", ipa_parts: ["ðer", "fɔːr"], stress: 0, steps: "ð - ð - ðer - ðer - [ˈðer.fɔːr]" },
+                { w: "them<b>selves</b>", ipa_parts: ["ðəm", "selvz"], stress: 1, steps: "s - s - se - se - selvz - [ðəmˈselvz]" },
+                { w: "<b>weath</b>er", ipa_parts: ["weð", "ər"], stress: 0, steps: "w - w - we - we - weð - [ˈweð.ər]" },
+                { w: "a<b>noth</b>er", ipa_parts: ["ə", "nʌð", "ər"], stress: 1, steps: "n - n - nʌ - nʌ - nʌð - nʌð.ər - [əˈnʌð.ər]" },
+                { w: "<b>bathe</b>", ipa_parts: ["beɪð"], stress: 0, steps: "b - b - beɪ - beɪ - [beɪð]" }
             ]
         },
         {
             day: 34,
             title: "Light L / Dark L",
             words: [
-                { w: "<b>lem</b>on", ipa_parts: ["lem", "ən"], stress: 0, steps: "l - le - lem - [ˈlem.ən]" },
-                { w: "<b>lis</b>ten", ipa_parts: ["lɪs", "ən"], stress: 0, steps: "l - lɪ - lɪs - [ˈlɪs.ən]" },
-                { w: "lo<b>ca</b>tion", ipa_parts: ["loʊ", "keɪ", "ʃən"], stress: 1, steps: "k - keɪ - keɪ.ʃən - [loʊˈkeɪ.ʃən]" },
-                { w: "po<b>lice</b>", ipa_parts: ["pə", "liːs"], stress: 1, steps: "l - liː - liːs - [pəˈliːs]" },
-                { w: "e<b>lev</b>en", ipa_parts: ["ə", "lev", "ən"], stress: 1, steps: "l - le - lev - lev.ən - [əˈlev.ən]" },
-                { w: "<b>spoil</b>", ipa_parts: ["spɔɪl"], stress: 0, steps: "s - spɔɪ - [spɔɪl]" },
-                { w: "<b>lev</b>el", ipa_parts: ["lev", "əl"], stress: 0, steps: "l - le - lev - [ˈlev.əl]" },
-                { w: "<b>tell</b>", ipa_parts: ["tel"], stress: 0, steps: "t - te - [tel]" },
-                { w: "<b>vil</b>lage", ipa_parts: ["vɪl", "ɪdʒ"], stress: 0, steps: "v - vɪ - vɪl - [ˈvɪl.ɪdʒ]" },
-                { w: "<b>ball</b>", ipa_parts: ["bɑːl"], stress: 0, steps: "b - bɑː - [bɑːl]" }
+                { w: "<b>lem</b>on", ipa_parts: ["lem", "ən"], stress: 0, steps: "l - l - le - le - lem - [ˈlem.ən]" },
+                { w: "<b>lis</b>ten", ipa_parts: ["lɪs", "ən"], stress: 0, steps: "l - l - lɪ - lɪ - lɪs - [ˈlɪs.ən]" },
+                { w: "lo<b>ca</b>tion", ipa_parts: ["loʊ", "keɪ", "ʃən"], stress: 1, steps: "k - k - keɪ - keɪ - keɪ.ʃən - [loʊˈkeɪ.ʃən]" },
+                { w: "po<b>lice</b>", ipa_parts: ["pə", "liːs"], stress: 1, steps: "l - l - liː - liː - liːs - [pəˈliːs]" },
+                { w: "e<b>lev</b>en", ipa_parts: ["ə", "lev", "ən"], stress: 1, steps: "l - l - le - le - lev - lev.ən - [əˈlev.ən]" },
+                { w: "<b>spoil</b>", ipa_parts: ["spɔɪl"], stress: 0, steps: "s - s - spɔɪ - spɔɪ - [spɔɪl]" },
+                { w: "<b>lev</b>el", ipa_parts: ["lev", "əl"], stress: 0, steps: "l - l - le - le - lev - [ˈlev.əl]" },
+                { w: "<b>tell</b>", ipa_parts: ["tel"], stress: 0, steps: "t - t - te - te - [tel]" },
+                { w: "<b>vil</b>lage", ipa_parts: ["vɪl", "ɪdʒ"], stress: 0, steps: "v - v - vɪ - vɪ - vɪl - [ˈvɪl.ɪdʒ]" },
+                { w: "<b>ball</b>", ipa_parts: ["bɑːl"], stress: 0, steps: "b - b - bɑː - bɑː - [bɑːl]" }
             ]
         },
         {
             day: 35,
             title: "R / W",
             words: [
-                { w: "<b>re</b>ally", ipa_parts: ["riː", "əl", "i"], stress: 0, steps: "r - riː - riː.əl - [ˈriː.əl.i]" },
-                { w: "<b>read</b>y", ipa_parts: ["red", "i"], stress: 0, steps: "r - re - red - [ˈred.i]" },
-                { w: "<b>rea</b>son", ipa_parts: ["riː", "zən"], stress: 0, steps: "r - riː - [ˈriː.zən]" },
-                { w: "gi<b>raffe</b>", ipa_parts: ["dʒə", "ræf"], stress: 1, steps: "r - ræ - ræf - [dʒəˈræf]" },
-                { w: "a<b>rrive</b>", ipa_parts: ["ə", "raɪv"], stress: 1, steps: "r - raɪ - raɪv - [əˈraɪv]" },
-                { w: "<b>wa</b>ter", ipa_parts: ["wɑ:", "tər"], stress: 0, steps: "w - wɑ: - [ˈwɑ:.tər]" },
-                { w: "<b>weath</b>er", ipa_parts: ["weð", "ər"], stress: 0, steps: "w - we - weð - [ˈweð.ər]" },
-                { w: "<b>week</b>end", ipa_parts: ["wiːk", "end"], stress: 0, steps: "w - wiː - wiːk - [ˈwiːk.end]" },
-                { w: "a<b>ware</b>", ipa_parts: ["ə", "wer"], stress: 1, steps: "w - wer - [əˈwer]" },
-                { w: "<b>home</b>work", ipa_parts: ["hoʊm", "wɜ:rk"], stress: 0, steps: "h - hoʊ - hoʊm - [ˈhoʊm.wɜ:rk]" }
+                { w: "<b>re</b>ally", ipa_parts: ["riː", "əl", "i"], stress: 0, steps: "r - r - riː - riː - riː.əl - [ˈriː.əl.i]" },
+                { w: "<b>read</b>y", ipa_parts: ["red", "i"], stress: 0, steps: "r - r - re - re - red - [ˈred.i]" },
+                { w: "<b>rea</b>son", ipa_parts: ["riː", "zən"], stress: 0, steps: "r - r - riː - riː - [ˈriː.zən]" },
+                { w: "gi<b>raffe</b>", ipa_parts: ["dʒə", "ræf"], stress: 1, steps: "r - r - ræ - ræ - ræf - [dʒəˈræf]" },
+                { w: "a<b>rrive</b>", ipa_parts: ["ə", "raɪv"], stress: 1, steps: "r - r - raɪ - raɪ - raɪv - [əˈraɪv]" },
+                { w: "<b>wa</b>ter", ipa_parts: ["wɑ:", "tər"], stress: 0, steps: "w - w - wɑ: - wɑ: - [ˈwɑ:.tər]" },
+                { w: "<b>weath</b>er", ipa_parts: ["weð", "ər"], stress: 0, steps: "w - w - we - we - weð - [ˈweð.ər]" },
+                { w: "<b>week</b>end", ipa_parts: ["wiːk", "end"], stress: 0, steps: "w - w - wiː - wiː - wiːk - [ˈwiːk.end]" },
+                { w: "a<b>ware</b>", ipa_parts: ["ə", "wer"], stress: 1, steps: "w - w - wer - wer - [əˈwer]" },
+                { w: "<b>home</b>work", ipa_parts: ["hoʊm", "wɜ:rk"], stress: 0, steps: "h - h - hoʊ - hoʊ - hoʊm - [ˈhoʊm.wɜ:rk]" }
             ]
         },
         {
             day: 36,
             title: "rl / Y",
             words: [
-                { w: "<b>re</b>al", ipa_parts: ["riː", "əl"], stress: 0, steps: "r - riː - [ˈriː.əl]" },
-                { w: "<b>reg</b>ular", ipa_parts: ["reg", "jə", "lər"], stress: 0, steps: "r - re - reg - reg.jə - [ˈreg.jə.lər]" },
-                { w: "<b>girl</b>", ipa_parts: ["gɜ:rl"], stress: 0, steps: "g - gɜ:r - [gɜ:rl]" },
-                { w: "<b>ear</b>ly", ipa_parts: ["ɜ:r", "li"], stress: 0, steps: "ɜ:r - [ˈɜ:r.li]" },
-                { w: "<b>world</b>", ipa_parts: ["wɜ:rld"], stress: 0, steps: "w - wɜ:r - [wɜ:rld]" },
-                { w: "<b>yell</b>ow", ipa_parts: ["yel", "oʊ"], stress: 0, steps: "y - yel - [ˈyel.oʊ]" },
-                { w: "your<b>self</b>", ipa_parts: ["jər", "self"], stress: 1, steps: "s - se - self - [jərˈself]" },
-                { w: "u<b>nique</b>", ipa_parts: ["ju", "niːk"], stress: 1, steps: "n - niː - niːk - [juˈniːk]" },
-                { w: "<b>val</b>ue", ipa_parts: ["væl", "juː"], stress: 0, steps: "v - væ - væl - [ˈvæl.juː]" },
-                { w: "<b>vol</b>ume", ipa_parts: ["vɑːl", "juːm"], stress: 0, steps: "v - vɑː - vɑːl - [ˈvɑːl.juːm]" }
+                { w: "<b>re</b>al", ipa_parts: ["riː", "əl"], stress: 0, steps: "r - r - riː - riː - [ˈriː.əl]" },
+                { w: "<b>reg</b>ular", ipa_parts: ["reg", "jə", "lər"], stress: 0, steps: "r - r - re - re - reg - reg.jə - [ˈreg.jə.lər]" },
+                { w: "<b>girl</b>", ipa_parts: ["gɜ:rl"], stress: 0, steps: "g - g - gɜ:r - gɜ:r - [gɜ:rl]" },
+                { w: "<b>ear</b>ly", ipa_parts: ["ɜ:r", "li"], stress: 0, steps: "ɜ:r - ɜ:r - [ˈɜ:r.li]" },
+                { w: "<b>world</b>", ipa_parts: ["wɜ:rld"], stress: 0, steps: "w - w - wɜ:r - wɜ:r - [wɜ:rld]" },
+                { w: "<b>yell</b>ow", ipa_parts: ["yel", "oʊ"], stress: 0, steps: "y - y - yel - yel - [ˈyel.oʊ]" },
+                { w: "your<b>self</b>", ipa_parts: ["jər", "self"], stress: 1, steps: "s - s - se - se - self - [jərˈself]" },
+                { w: "u<b>nique</b>", ipa_parts: ["ju", "niːk"], stress: 1, steps: "n - n - niː - niː - niːk - [juˈniːk]" },
+                { w: "<b>val</b>ue", ipa_parts: ["væl", "juː"], stress: 0, steps: "v - v - væ - væ - væl - [ˈvæl.juː]" },
+                { w: "<b>vol</b>ume", ipa_parts: ["vɑːl", "juːm"], stress: 0, steps: "v - v - vɑː - vɑː - vɑːl - [ˈvɑːl.juːm]" }
             ]
         },
         {
             day: 37,
             title: "CH / J",
             words: [
-                { w: "<b>chil</b>dren", ipa_parts: ["tʃɪl", "drən"], stress: 0, steps: "tʃ - tʃɪ - tʃɪl - [ˈtʃɪl.drən]" },
-                { w: "<b>chick</b>en", ipa_parts: ["tʃɪk", "ɪn"], stress: 0, steps: "tʃ - tʃɪ - tʃɪk - [ˈtʃɪk.ɪn]" },
-                { w: "<b>chal</b>lenge", ipa_parts: ["tʃæl", "ɪndʒ"], stress: 0, steps: "tʃ - tʃæ - tʃæl - [ˈtʃæl.ɪndʒ]" },
-                { w: "a<b>chieve</b>", ipa_parts: ["ə", "tʃiːv"], stress: 1, steps: "tʃ - tʃiː - tʃiːv - [əˈtʃiːv]" },
-                { w: "<b>stretch</b>", ipa_parts: ["stretʃ"], stress: 0, steps: "s - str - [stretʃ]" },
-                { w: "<b>jeal</b>ous", ipa_parts: ["dʒel", "əs"], stress: 0, steps: "dʒ - dʒe - dʒel - [ˈdʒel.əs]" },
-                { w: "<b>ju</b>nior", ipa_parts: ["dʒuː", "njər"], stress: 0, steps: "dʒ - dʒuː - [ˈdʒuː.njər]" },
-                { w: "in<b>ject</b>", ipa_parts: ["ɪn", "dʒekt"], stress: 1, steps: "dʒ - dʒe - dʒekt - [ɪnˈdʒekt]" },
-                { w: "<b>know</b>ledge", ipa_parts: ["nɑː", "lɪdʒ"], stress: 0, steps: "n - nɑː - [ˈnɑː.lɪdʒ]" },
-                { w: "<b>judge</b>", ipa_parts: ["dʒʌdʒ"], stress: 0, steps: "dʒ - dʒʌ - [dʒʌdʒ]" }
+                { w: "<b>chil</b>dren", ipa_parts: ["tʃɪl", "drən"], stress: 0, steps: "tʃ - tʃ - tʃɪ - tʃɪ - tʃɪl - [ˈtʃɪl.drən]" },
+                { w: "<b>chick</b>en", ipa_parts: ["tʃɪk", "ɪn"], stress: 0, steps: "tʃ - tʃ - tʃɪ - tʃɪ - tʃɪk - [ˈtʃɪk.ɪn]" },
+                { w: "<b>chal</b>lenge", ipa_parts: ["tʃæl", "ɪndʒ"], stress: 0, steps: "tʃ - tʃ - tʃæ - tʃæ - tʃæl - [ˈtʃæl.ɪndʒ]" },
+                { w: "a<b>chieve</b>", ipa_parts: ["ə", "tʃiːv"], stress: 1, steps: "tʃ - tʃ - tʃiː - tʃiː - tʃiːv - [əˈtʃiːv]" },
+                { w: "<b>stretch</b>", ipa_parts: ["stretʃ"], stress: 0, steps: "s - s - str - str - [stretʃ]" },
+                { w: "<b>jeal</b>ous", ipa_parts: ["dʒel", "əs"], stress: 0, steps: "dʒ - dʒ - dʒe - dʒe - dʒel - [ˈdʒel.əs]" },
+                { w: "<b>ju</b>nior", ipa_parts: ["dʒuː", "njər"], stress: 0, steps: "dʒ - dʒ - dʒuː - dʒuː - [ˈdʒuː.njər]" },
+                { w: "in<b>ject</b>", ipa_parts: ["ɪn", "dʒekt"], stress: 1, steps: "dʒ - dʒ - dʒe - dʒe - dʒekt - [ɪnˈdʒekt]" },
+                { w: "<b>know</b>ledge", ipa_parts: ["nɑː", "lɪdʒ"], stress: 0, steps: "n - n - nɑː - nɑː - [ˈnɑː.lɪdʒ]" },
+                { w: "<b>judge</b>", ipa_parts: ["dʒʌdʒ"], stress: 0, steps: "dʒ - dʒ - dʒʌ - dʒʌ - [dʒʌdʒ]" }
             ]
         },
         {
             day: 38,
             title: "M / N / NG",
             words: [
-                { w: "<b>mon</b>ey", ipa_parts: ["mʌn", "i"], stress: 0, steps: "m - mʌ - mʌn - [ˈmʌn.i]" },
-                { w: "<b>mag</b>net", ipa_parts: ["mæg", "nət"], stress: 0, steps: "m - mæ - mæg - [ˈmæg.nət]" },
-                { w: "ma<b>chine</b>", ipa_parts: ["mə", "ʃiːn"], stress: 1, steps: "ʃ - ʃiː - ʃiːn - [məˈʃiːn]" },
-                { w: "<b>noth</b>ing", ipa_parts: ["nʌθ", "ɪŋ"], stress: 0, steps: "n - nʌ - nʌθ - [ˈnʌθ.ɪŋ]" },
-                { w: "<b>neigh</b>bor", ipa_parts: ["neɪ", "bər"], stress: 0, steps: "n - neɪ - [ˈneɪ.bər]" },
-                { w: "e<b>nough</b>", ipa_parts: ["ə", "nʌf"], stress: 1, steps: "n - nʌ - nʌf - [əˈnʌf]" },
-                { w: "<b>funn</b>y", ipa_parts: ["fʌn", "i"], stress: 0, steps: "f - fʌ - fʌn - [ˈfʌn.i]" },
-                { w: "<b>sing</b>er", ipa_parts: ["sɪŋ", "ər"], stress: 0, steps: "s - sɪ - sɪŋ - [ˈsɪŋ.ər]" },
-                { w: "<b>fing</b>er", ipa_parts: ["fɪŋ", "ɡər"], stress: 0, steps: "f - fɪ - fɪŋ - [ˈfɪŋ.ɡər]" },
-                { w: "<b>lon</b>gest", ipa_parts: ["lɑːŋ", "ɡɪst"], stress: 0, steps: "l - lɑː - lɑːŋ - [ˈlɑːŋ.ɡɪst]" }
+                { w: "<b>mon</b>ey", ipa_parts: ["mʌn", "i"], stress: 0, steps: "m - m - mʌ - mʌ - mʌn - [ˈmʌn.i]" },
+                { w: "<b>mag</b>net", ipa_parts: ["mæg", "nət"], stress: 0, steps: "m - m - mæ - mæ - mæg - [ˈmæg.nət]" },
+                { w: "ma<b>chine</b>", ipa_parts: ["mə", "ʃiːn"], stress: 1, steps: "ʃ - ʃ - ʃiː - ʃiː - ʃiːn - [məˈʃiːn]" },
+                { w: "<b>noth</b>ing", ipa_parts: ["nʌθ", "ɪŋ"], stress: 0, steps: "n - n - nʌ - nʌ - nʌθ - [ˈnʌθ.ɪŋ]" },
+                { w: "<b>neigh</b>bor", ipa_parts: ["neɪ", "bər"], stress: 0, steps: "n - n - neɪ - neɪ - [ˈneɪ.bər]" },
+                { w: "e<b>nough</b>", ipa_parts: ["ə", "nʌf"], stress: 1, steps: "n - n - nʌ - nʌ - nʌf - [əˈnʌf]" },
+                { w: "<b>funn</b>y", ipa_parts: ["fʌn", "i"], stress: 0, steps: "f - f - fʌ - fʌ - fʌn - [ˈfʌn.i]" },
+                { w: "<b>sing</b>er", ipa_parts: ["sɪŋ", "ər"], stress: 0, steps: "s - s - sɪ - sɪ - sɪŋ - [ˈsɪŋ.ər]" },
+                { w: "<b>fing</b>er", ipa_parts: ["fɪŋ", "ɡər"], stress: 0, steps: "f - f - fɪ - fɪ - fɪŋ - [ˈfɪŋ.ɡər]" },
+                { w: "<b>lon</b>gest", ipa_parts: ["lɑːŋ", "ɡɪst"], stress: 0, steps: "l - l - lɑː - lɑː - lɑːŋ - [ˈlɑːŋ.ɡɪst]" }
             ]
         }
     ];
@@ -602,7 +605,11 @@
             const row = document.createElement('div');
             row.classList.add('word-row');
 
-            // 1. 단어 카드 영역 (세로 정렬을 위한 래퍼 추가)
+            // 상단 영역 (단어 카드 + 음절 카드)
+            const topSection = document.createElement('div');
+            topSection.classList.add('word-top-section');
+
+            // 1. 단어 카드 영역
             const wordCol = document.createElement('div');
             wordCol.classList.add('word-col');
 
@@ -611,11 +618,9 @@
             wordCard.innerHTML = wordObj.w; 
             wordCol.appendChild(wordCard);
 
-            // 오디오 재생 버튼 그룹 추가
+            // 오디오 버튼
             const audioGroup = document.createElement('div');
             audioGroup.classList.add('audio-btn-group');
-
-            // 텍스트 추출 (HTML <b> 태그 등을 제거하여 순수 단어만 남김)
             const plainWord = wordObj.w.replace(/<[^>]+>/g, '');
 
             const btnNormal = document.createElement('button');
@@ -632,13 +637,9 @@
             audioGroup.appendChild(btnSlow);
             wordCol.appendChild(audioGroup);
 
-            row.appendChild(wordCol);
+            topSection.appendChild(wordCol); // 단어영역을 상단섹션에 추가
 
-            // 2. 오른쪽 그룹 컨테이너 (음절카드들 + 발음 순서)
-            const rightGroup = document.createElement('div');
-            rightGroup.classList.add('right-content-group');
-
-            // 2-1. 음절 카드 컨테이너
+            // 2. 음절 카드 컨테이너
             const syllableContainer = document.createElement('div');
             syllableContainer.classList.add('syllable-container');
 
@@ -653,17 +654,20 @@
                 }
                 syllableContainer.appendChild(card);
             });
-            rightGroup.appendChild(syllableContainer);
+            
+            topSection.appendChild(syllableContainer); // 음절영역을 상단섹션에 추가
 
-            // 2-2. 발음 빌드업 텍스트 (Build-up 글자 삭제 및 괄호만 표시)
+            // 상단 섹션을 전체 행에 추가
+            row.appendChild(topSection);
+
+            // 3. 발음 빌드업 텍스트 (단어와 음절 아래로 넓게 배치)
             if (wordObj.steps) {
                 const stepBox = document.createElement('div');
                 stepBox.classList.add('step-box');
                 stepBox.innerHTML = `<span class="step-highlight">${wordObj.steps}</span>`;
-                rightGroup.appendChild(stepBox);
+                row.appendChild(stepBox);
             }
 
-            row.appendChild(rightGroup);
             wordListContainer.appendChild(row);
         });
     }
