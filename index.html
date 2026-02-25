@@ -263,7 +263,7 @@
         /* 2강세 (주황색 점선, 기본 폰트 색상) */
         .syllable-secondary {
             border: 2px dashed #ff9800; 
-            color: #3e2723; /* 주황색 폰트 제거, 기본 진한 색으로 유지 */
+            color: #3e2723; 
             font-weight: 700;
         }
         
@@ -284,7 +284,9 @@
             line-height: 1.6;
             width: 100%; 
             box-sizing: border-box;
-            word-break: break-word; 
+            /* 핵심 변경: 단어가 중간에 쪼개지지 않고 통째로 다음 줄로 넘어가도록 설정 */
+            word-break: keep-all; 
+            overflow-wrap: break-word; 
         }
         .step-highlight {
             color: #e65100;
@@ -333,7 +335,6 @@
 </div>
 
 <script>
-    // 2강세(secondary_stress)가 필요한 단어들에 정보를 추가하고, steps의 [] 괄호를 삭제한 데이터입니다.
     const wordData = [
         { day: 24, title: "Schwa (슈와)", words: [
             { w: "a<b>tten</b>tion", ipa_parts: ["ə", "ten", "ʃən"], stress: 1, steps: "t - t - te - te - ten - ten.ʃən - əˈten.ʃən" },
