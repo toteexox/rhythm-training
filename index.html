@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리듬 훈련 (Vivid Orange Ver)</title>
+    <style>
+        body {
+            background-color: #fffbf0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            color: #4e342e;
+        }
+
+        /* --- 레이아웃 --- */
+        .container {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            gap: 40px;
+        }
+
+        .left-panel {
+            flex: 1;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(78, 52, 46, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: fit-content;
+            position: sticky;
+            top: 20px; 
+            border: 1px solid #efebe9;
+        }
+
+        .right-panel {
+            flex: 2;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(78, 52, 46, 0.08);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #efebe9;
+        }
+
+        @media (max-width: 900px) {
+            .container { flex-direction: column; gap: 20px; }
+            .left-panel { position: static; width: auto; }
+        }
+
+        h2 {
+            color: #4e342e;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0 0 30px 0;
+            text-align: center;
+            border-bottom: 4px solid #ff9800;
+            padding-bottom: 10px;
+            width: 100%;
+        }
+
+        /* --- 메트로놈 UI --- */
+        .emoji-container {
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            width: 100%;
+            background-color: #fff3e0;
+            border-radius: 15px;
+        }
+
+        .emoji-display {
+            font-size: 6rem;
+            transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .play-btn {
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            padding: 15px 0;
+            width: 100%;
+            font-size: 1.5rem;
+            font-weight: 800;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(255, 152, 0, 0.3);
+            transition: all 0.1s ease;
+        }
+        .play-btn:active { transform: scale(0.98); }
+        .play-btn.playing {
+            background-color: #f57c00;
+            box-shadow: 0 6px 15px rgba(245, 124, 0, 0.3);
+        }
+
+        /* --- 우측 패널 UI --- */
+        .section-header {
+            font-size: 1.2rem;
+            color: #8d6e63;
+            margin-bottom: 15px;
+            font-weight: 700;
+            border-left: 5px solid #ff9800;
+            padding-left: 10px;
+        }
+
+        .day-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .day-btn {
+            background-color: #fff;
+            border: 1px solid #d7ccc8;
+            border-radius: 8px;
+            padding: 10px 5px;
+            font-size: 0.9rem;
+            color: #5d4037;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+        .day-btn:hover { background-color: #efebe9; }
+        .day-btn.active {
+            background-color: #ffe0b2;
+            border-color: #ff9800;
+            color: #e65100;
+            font-weight: 800;
+        }
+
+        #selectedDayTitle {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #4e342e;
+            margin-bottom: 25px;
+            padding: 10px;
+            background-color: #fff8e1;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+        }
+
+        /* --- 카드 및 리스트 스타일 --- */
+        .word-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #efebe9;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        /* 1. 단어 카드 & 오디오 버튼 래퍼 */
+        .word-col {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 120px;
+            flex-shrink: 0;
+        }
+
+        /* 왼쪽 영어 단어 카드 */
+        .word-card-main {
+            background-color: #ff9800;
+            color: #3e2723;
+            border: none;
+            box-shadow: none;
+            padding: 0 20px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: 400; 
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .word-card-main b { font-weight: 900; }
+
+        /* 오디오 버튼 그룹 */
+        .audio-btn-group {
+            display: flex;
+            gap: 5px;
+            width: 100%;
+        }
+
+        .audio-btn {
+            flex: 1;
+            background-color: #fff3e0;
+            color: #e65100;
+            border: 1px solid #ffb74d;
+            border-radius: 6px;
+            padding: 5px 0;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .audio-btn:hover {
+            background-color: #ffe0b2;
+        }
+        
+        .audio-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* 오른쪽 영역 그룹 */
+        .right-content-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 12px;
+        }
+
+        /* 발음기호 카드 컨테이너 */
+        .syllable-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .syllable-card {
+            min-width: 80px;
+            height: 60px;
+            padding: 0 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Lucida Sans Unicode", "Arial Unicode MS", monospace;
+            font-size: 1.3rem;
+            border-radius: 12px;
+            background-color: white;
+            box-sizing: border-box;
+        }
+        .syllable-strong {
+            border: 3px solid #ff9800;
+            color: #3e2723;
+            font-weight: 900;
+        }
+        .syllable-weak {
+            border: 2px dashed #bcaaa4;
+            color: #8d6e63;
+        }
+
+        /* 2. 발음 연습 순서 (Step by Step) 스타일 - 글씨체 통일 및 크기 소폭 조정 */
+        .step-box {
+            background-color: #fff3e0;
+            border-left: 4px solid #ffcc80;
+            padding: 10px 15px;
+            border-radius: 0 8px 8px 0;
+            font-size: 1.1rem; 
+            color: #5d4037;
+            font-family: "Lucida Sans Unicode", "Arial Unicode MS", monospace; /* 음절 카드와 동일하게 변경 */
+            line-height: 1.6;
+        }
+        .step-highlight {
+            color: #e65100;
+            font-weight: 700;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div class="left-panel">
+        <h2>단어 리듬 훈련</h2>
+        <div class="emoji-container">
+            <div id="visualDisplay" class="emoji-display">🫸🏻 🫷🏻</div>
+        </div>
+        <button id="playBtn" class="play-btn">START</button>
+        <div style="margin-top: 20px; font-size: 0.9rem; color: #8d6e63; text-align: center;">
+            소리를 켜고<br>주황색 테두리에 강세를 주세요!
+        </div>
+    </div>
+
+    <div class="right-panel">
+        <div class="section-header">학습할 음소 선택</div>
+        <div id="dayButtons" class="day-grid"></div>
+
+        <div id="selectedDayTitle"></div>
+        
+        <div id="wordList">
+            <div style="text-align: center; color: #bcaaa4; padding: 40px;">
+                위에서 학습할 버튼을 눌러주세요.
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const wordData = [
+        {
+            day: 24,
+            title: "Schwa (슈와)",
+            words: [
+                { w: "a<b>tten</b>tion", ipa_parts: ["ə", "ten", "ʃən"], stress: 1, steps: "t - te - ten - ten.ʃən - [əˈten.ʃən]" },
+                { w: "a<b>vai</b>lable", ipa_parts: ["ə", "veɪ", "lə", "bl"], stress: 1, steps: "v - veɪ - veɪ.lə - veɪ.lə.bl - [əˈveɪ.lə.bl]" },
+                { w: "a<b>gain</b>", ipa_parts: ["ə", "ɡen"], stress: 1, steps: "ɡ - ɡe - ɡen - [əˈɡen]" },
+                { w: "<b>diff</b>erent", ipa_parts: ["dɪf", "ər", "ənt"], stress: 0, steps: "d - dɪ - dɪf - dɪf.ər - [ˈdɪf.ər.ənt]" },
+                { w: "<b>his</b>tory", ipa_parts: ["hɪs", "tər", "i"], stress: 0, steps: "h - hɪ - hɪs - hɪs.tər - [ˈhɪs.tər.i]" },
+                { w: "<b>pro</b>blem", ipa_parts: ["prɑː", "bləm"], stress: 0, steps: "p - prɑː - [ˈprɑː.bləm]" },
+                { w: "so<b>ci</b>ety", ipa_parts: ["sə", "saɪ", "ə", "ti"], stress: 1, steps: "s - saɪ - saɪ.ə - saɪ.ə.ti - [səˈsaɪ.ə.ti]" },
+                { w: "po<b>sit</b>ion", ipa_parts: ["pə", "zɪʃ", "ən"], stress: 1, steps: "z - zɪ - zɪʃ - zɪʃ.ən - [pəˈzɪʃ.ən]" },
+                { w: "<b>pa</b>sta", ipa_parts: ["pɑː", "stə"], stress: 0, steps: "p - pɑː - [ˈpɑː.stə]" },
+                { w: "<b>piz</b>za", ipa_parts: ["piːt", "sə"], stress: 0, steps: "p - piː - piːt - [ˈpiːt.sə]" }
+            ]
+        },
+        {
+            day: 25,
+            title: "H Sound",
+            words: [
+                { w: "<b>ham</b>ster", ipa_parts: ["hæm", "stər"], stress: 0, steps: "h - hæ - hæm - [ˈhæm.stər]" },
+                { w: "<b>ho</b>bby", ipa_parts: ["hɑː", "bi"], stress: 0, steps: "h - hɑː - [ˈhɑː.bi]" },
+                { w: "be<b>hind</b>", ipa_parts: ["bɪ", "haɪnd"], stress: 1, steps: "h - haɪ - haɪnd - [bɪˈhaɪnd]" },
+                { w: "re<b>heat</b>", ipa_parts: ["riː", "hiːt"], stress: 1, steps: "h - hiː - hiːt - [riːˈhiːt]" },
+                { w: "un<b>happ</b>y", ipa_parts: ["ʌn", "hæp", "i"], stress: 1, steps: "h - hæ - hæp - hæp.i - [ʌnˈhæp.i]" }
+            ]
+        },
+        {
+            day: 26,
+            title: "P / B",
+            words: [
+                { w: "<b>peo</b>ple", ipa_parts: ["piː", "pəl"], stress: 0, steps: "p - piː - [ˈpiː.pəl]" },
+                { w: "<b>pa</b>per", ipa_parts: ["peɪ", "pər"], stress: 0, steps: "p - peɪ - [ˈpeɪ.pər]" },
+                { w: "<b>pu</b>ppy", ipa_parts: ["pʌ", "pi"], stress: 0, steps: "p - pʌ - [ˈpʌ.pi]" },
+                { w: "Ja<b>pan</b>", ipa_parts: ["dʒə", "pæn"], stress: 1, steps: "p - pæ - pæn - [dʒəˈpæn]" },
+                { w: "<b>happ</b>y", ipa_parts: ["hæp", "i"], stress: 0, steps: "h - hæ - hæp - [ˈhæp.i]" },
+                { w: "<b>ba</b>con", ipa_parts: ["beɪ", "kən"], stress: 0, steps: "b - beɪ - [ˈbeɪ.kən]" },
+                { w: "<b>bus</b>y", ipa_parts: ["bɪz", "i"], stress: 0, steps: "b - bɪ - bɪz - [ˈbɪz.i]" },
+                { w: "<b>ba</b>by", ipa_parts: ["beɪ", "bi"], stress: 0, steps: "b - beɪ - [ˈbeɪ.bi]" },
+                { w: "a<b>bout</b>", ipa_parts: ["ə", "baʊt"], stress: 1, steps: "b - baʊ - baʊt - [əˈbaʊt]" },
+                { w: "o<b>bey</b>", ipa_parts: ["ə", "beɪ"], stress: 1, steps: "b - beɪ - [əˈbeɪ]" }
+            ]
+        },
+        {
+            day: 27,
+            title: "K / G",
+            words: [
+                { w: "<b>ki</b>wi", ipa_parts: ["kiː", "wiː"], stress: 0, steps: "k - kiː - [ˈkiː.wiː]" },
+                { w: "be<b>cause</b>", ipa_parts: ["bɪ", "kɑ:z"], stress: 1, steps: "k - kɑ: - kɑ:z - [bɪˈkɑ:z]" },
+                { w: "<b>kit</b>chen", ipa_parts: ["kɪtʃ", "ən"], stress: 0, steps: "k - kɪ - kɪtʃ - [ˈkɪtʃ.ən]" },
+                { w: "be<b>come</b>", ipa_parts: ["bɪ", "kʌm"], stress: 1, steps: "k - kʌ - kʌm - [bɪˈkʌm]" },
+                { w: "<b>book</b>ing", ipa_parts: ["bʊk", "ɪŋ"], stress: 0, steps: "b - bʊ - bʊk - [ˈbʊk.ɪŋ]" },
+                { w: "<b>gum</b>my", ipa_parts: ["ɡʌm", "i"], stress: 0, steps: "ɡ - ɡʌ - ɡʌm - [ˈɡʌm.i]" },
+                { w: "good<b>bye</b>", ipa_parts: ["ɡʊd", "baɪ"], stress: 1, steps: "b - baɪ - [ɡʊdˈbaɪ]" },
+                { w: "be<b>gin</b>", ipa_parts: ["bɪ", "ɡɪn"], stress: 1, steps: "ɡ - ɡɪ - ɡɪn - [bɪˈɡɪn]" },
+                { w: "a<b>gain</b>", ipa_parts: ["ə", "ɡen"], stress: 1, steps: "ɡ - ɡe - ɡen - [əˈɡen]" },
+                { w: "a<b>gainst</b>", ipa_parts: ["ə", "ɡenst"], stress: 1, steps: "ɡ - ɡe - ɡenst - [əˈɡenst]" }
+            ]
+        },
+        {
+            day: 28,
+            title: "True T/D, Flap T/D",
+            words: [
+                { w: "<b>ta</b>ble", ipa_parts: ["teɪ", "bəl"], stress: 0, steps: "t - teɪ - [ˈteɪ.bəl]" },
+                { w: "fif<b>teen</b>", ipa_parts: ["fɪf", "tiːn"], stress: 1, steps: "t - tiː - tiːn - [fɪfˈtiːn]" },
+                { w: "<b>ti</b>ny", ipa_parts: ["taɪ", "ni"], stress: 0, steps: "t - taɪ - [ˈtaɪ.ni]" },
+                { w: "<b>doc</b>tor", ipa_parts: ["dɑːk", "tər"], stress: 0, steps: "d - dɑː - dɑːk - [ˈdɑːk.tər]" },
+                { w: "to<b>day</b>", ipa_parts: ["tə", "deɪ"], stress: 1, steps: "d - deɪ - [təˈdeɪ]" },
+                { w: "<b>bet</b>ter", ipa_parts: ["bet", "ər"], stress: 0, steps: "b - be - bet - [ˈbet.ər]" },
+                { w: "<b>ti</b>tle", ipa_parts: ["taɪ", "təl"], stress: 0, steps: "t - taɪ - [ˈtaɪ.təl]" },
+                { w: "<b>la</b>dy", ipa_parts: ["leɪ", "di"], stress: 0, steps: "l - leɪ - [ˈleɪ.di]" },
+                { w: "<b>stud</b>y", ipa_parts: ["stʌd", "i"], stress: 0, steps: "s - stʌ - stʌd - [ˈstʌd.i]" },
+                { w: "<b>ladd</b>er", ipa_parts: ["læd", "ər"], stress: 0, steps: "l - læ - læd - [ˈlæd.ər]" }
+            ]
+        },
+        {
+            day: 29,
+            title: "Stop T/D, No T",
+            words: [
+                { w: "<b>cur</b>tain", ipa_parts: ["kɜ:r", "tən"], stress: 0, steps: "k - kɜ:r - [ˈkɜ:r.tən]" },
+                { w: "<b>fit</b>ness", ipa_parts: ["fɪt", "nəs"], stress: 0, steps: "f - fɪ - fɪt - [ˈfɪt.nəs]" },
+                { w: "<b>butt</b>on", ipa_parts: ["bʌt", "ən"], stress: 0, steps: "b - bʌ - bʌt - [ˈbʌt.ən]" },
+                { w: "good<b>will</b>", ipa_parts: ["ɡʊd", "wɪl"], stress: 1, steps: "w - wɪ - wɪl - [ɡʊdˈwɪl]" },
+                { w: "<b>feed</b>back", ipa_parts: ["fiːd", "bæk"], stress: 0, steps: "f - fiː - fiːd - [ˈfiːd.bæk]" },
+                { w: "<b>in</b>ternet", ipa_parts: ["ɪn", "tər", "net"], stress: 0, steps: "ɪ - ɪn - ɪn.tər - [ˈɪn.tər.net]" },
+                { w: "<b>cen</b>ter", ipa_parts: ["sen", "tər"], stress: 0, steps: "s - se - sen - [ˈsen.tər]" },
+                { w: "<b>per</b>fectly", ipa_parts: ["pɜ:r", "fɪk", "li"], stress: 0, steps: "p - pɜ:r - pɜ:r.fɪk - [ˈpɜ:r.fɪk.li]" },
+                { w: "co<b>rrect</b>ly", ipa_parts: ["kə", "rek", "li"], stress: 1, steps: "r - re - rek - rek.li - [kəˈrek.li]" },
+                { w: "<b>in</b>terview", ipa_parts: ["ɪn", "tər", "vjuː"], stress: 0, steps: "ɪ - ɪn - ɪn.tər - [ˈɪn.tər.vjuː]" }
+            ]
+        },
+        {
+            day: 30,
+            title: "S / Z",
+            words: [
+                { w: "<b>steak</b>", ipa_parts: ["steɪk"], stress: 0, steps: "s - steɪ - [steɪk]" },
+                { w: "<b>sis</b>ter", ipa_parts: ["sɪs", "tər"], stress: 0, steps: "s - sɪ - sɪs - [ˈsɪs.tər]" },
+                { w: "<b>sum</b>mer", ipa_parts: ["sʌm", "ər"], stress: 0, steps: "s - sʌ - sʌm - [ˈsʌm.ər]" },
+                { w: "suc<b>cess</b>", ipa_parts: ["sək", "ses"], stress: 1, steps: "s - se - ses - [səkˈses]" },
+                { w: "re<b>spond</b>", ipa_parts: ["rɪ", "spɑːnd"], stress: 1, steps: "s - spɑː - spɑːnd - [rɪˈspɑːnd]" },
+                { w: "<b>zip</b>per", ipa_parts: ["zɪp", "ər"], stress: 0, steps: "z - zɪ - zɪp - [ˈzɪp.ər]" },
+                { w: "<b>ze</b>bra", ipa_parts: ["ziː", "brə"], stress: 0, steps: "z - ziː - [ˈziː.brə]" },
+                { w: "un<b>zip</b>", ipa_parts: ["ʌn", "zɪp"], stress: 1, steps: "z - zɪ - zɪp - [ʌnˈzɪp]" },
+                { w: "<b>cou</b>sin", ipa_parts: ["kʌz", "ən"], stress: 0, steps: "k - kʌ - kʌz - [ˈkʌz.ən]" },
+                { w: "<b>cheese</b>", ipa_parts: ["tʃiːz"], stress: 0, steps: "tʃ - tʃiː - [tʃiːz]" }
+            ]
+        },
+        {
+            day: 31,
+            title: "SH / ZH",
+            words: [
+                { w: "sham<b>poo</b>", ipa_parts: ["ʃæm", "puː"], stress: 1, steps: "p - puː - [ʃæmˈpuː]" },
+                { w: "<b>shad</b>ow", ipa_parts: ["ʃæd", "oʊ"], stress: 0, steps: "ʃ - ʃæ - ʃæd - [ˈʃæd.oʊ]" },
+                { w: "<b>show</b>er", ipa_parts: ["ʃaʊ", "ər"], stress: 0, steps: "ʃ - ʃaʊ - [ˈʃaʊ.ər]" },
+                { w: "<b>tiss</b>ue", ipa_parts: ["tɪʃ", "uː"], stress: 0, steps: "t - tɪ - tɪʃ - [ˈtɪʃ.uː]" },
+                { w: "<b>fin</b>ish", ipa_parts: ["fɪn", "ɪʃ"], stress: 0, steps: "f - fɪ - fɪn - [ˈfɪn.ɪʃ]" },
+                { w: "<b>vis</b>ion", ipa_parts: ["vɪʒ", "ən"], stress: 0, steps: "v - vɪ - vɪʒ - [ˈvɪʒ.ən]" },
+                { w: "<b>a</b>sia", ipa_parts: ["eɪ", "ʒə"], stress: 0, steps: "eɪ - [ˈeɪ.ʒə]" },
+                { w: "<b>lei</b>sure", ipa_parts: ["li:ʒ", "ər"], stress: 0, steps: "l - li: - li:ʒ - [ˈli:ʒ.ər]" },
+                { w: "ma<b>ssage</b>", ipa_parts: ["mə", "sɑ:ʒ"], stress: 1, steps: "s - sɑ: - sɑ:ʒ - [məˈsɑ:ʒ]" },
+                { w: "ga<b>rage</b>", ipa_parts: ["ɡə", "rɑ:ʒ"], stress: 1, steps: "r - rɑ: - rɑ:ʒ - [ɡəˈrɑ:ʒ]" }
+            ]
+        },
+        {
+            day: 32,
+            title: "F / V",
+            words: [
+                { w: "<b>fin</b>ger", ipa_parts: ["fɪŋ", "ɡər"], stress: 0, steps: "f - fɪ - fɪŋ - [ˈfɪŋ.ɡər]" },
+                { w: "<b>fa</b>mous", ipa_parts: ["feɪ", "məs"], stress: 0, steps: "f - feɪ - [ˈfeɪ.məs]" },
+                { w: "be<b>fore</b>", ipa_parts: ["bɪ", "fɔːr"], stress: 1, steps: "f - fɔː - fɔːr - [bɪˈfɔːr]" },
+                { w: "<b>co</b>ffee", ipa_parts: ["kɑ:", "fi"], stress: 0, steps: "k - kɑ: - [ˈkɑ:.fi]" },
+                { w: "<b>leaf</b>", ipa_parts: ["liːf"], stress: 0, steps: "l - liː - [liːf]" },
+                { w: "vac<b>cine</b>", ipa_parts: ["væk", "siːn"], stress: 1, steps: "s - siː - siːn - [vækˈsiːn]" },
+                { w: "<b>vill</b>age", ipa_parts: ["vɪl", "ɪdʒ"], stress: 0, steps: "v - vɪ - vɪl - [ˈvɪl.ɪdʒ]" },
+                { w: "pro<b>vide</b>", ipa_parts: ["prə", "vaɪd"], stress: 1, steps: "v - vaɪ - vaɪd - [prəˈvaɪd]" },
+                { w: "<b>dev</b>il", ipa_parts: ["dev", "əl"], stress: 0, steps: "d - de - dev - [ˈdev.əl]" },
+                { w: "<b>leave</b>", ipa_parts: ["liːv"], stress: 0, steps: "l - liː - [liːv]" }
+            ]
+        },
+        {
+            day: 33,
+            title: "TH(θ) / TH(ð)",
+            words: [
+                { w: "<b>thir</b>ty", ipa_parts: ["θɜ:r", "ti"], stress: 0, steps: "θ - θɜ:r - [ˈθɜ:r.ti]" },
+                { w: "<b>thank</b>ful", ipa_parts: ["θæŋk", "fəl"], stress: 0, steps: "θ - θæ - θæŋk - [ˈθæŋk.fəl]" },
+                { w: "<b>birth</b>day", ipa_parts: ["bɜ:rθ", "deɪ"], stress: 0, steps: "b - bɜ:r - bɜ:rθ - [ˈbɜ:rθ.deɪ]" },
+                { w: "re<b>think</b>", ipa_parts: ["riː", "θɪŋk"], stress: 1, steps: "θ - θɪ - θɪŋk - [riːˈθɪŋk]" },
+                { w: "<b>mouth</b>", ipa_parts: ["maʊθ"], stress: 0, steps: "m - maʊ - [maʊθ]" },
+                { w: "<b>there</b>fore", ipa_parts: ["ðer", "fɔːr"], stress: 0, steps: "ð - ðer - [ˈðer.fɔːr]" },
+                { w: "them<b>selves</b>", ipa_parts: ["ðəm", "selvz"], stress: 1, steps: "s - se - selvz - [ðəmˈselvz]" },
+                { w: "<b>weath</b>er", ipa_parts: ["weð", "ər"], stress: 0, steps: "w - we - weð - [ˈweð.ər]" },
+                { w: "a<b>noth</b>er", ipa_parts: ["ə", "nʌð", "ər"], stress: 1, steps: "n - nʌ - nʌð - nʌð.ər - [əˈnʌð.ər]" },
+                { w: "<b>bathe</b>", ipa_parts: ["beɪð"], stress: 0, steps: "b - beɪ - [beɪð]" }
+            ]
+        },
+        {
+            day: 34,
+            title: "Light L / Dark L",
+            words: [
+                { w: "<b>lem</b>on", ipa_parts: ["lem", "ən"], stress: 0, steps: "l - le - lem - [ˈlem.ən]" },
+                { w: "<b>lis</b>ten", ipa_parts: ["lɪs", "ən"], stress: 0, steps: "l - lɪ - lɪs - [ˈlɪs.ən]" },
+                { w: "lo<b>ca</b>tion", ipa_parts: ["loʊ", "keɪ", "ʃən"], stress: 1, steps: "k - keɪ - keɪ.ʃən - [loʊˈkeɪ.ʃən]" },
+                { w: "po<b>lice</b>", ipa_parts: ["pə", "liːs"], stress: 1, steps: "l - liː - liːs - [pəˈliːs]" },
+                { w: "e<b>lev</b>en", ipa_parts: ["ə", "lev", "ən"], stress: 1, steps: "l - le - lev - lev.ən - [əˈlev.ən]" },
+                { w: "<b>spoil</b>", ipa_parts: ["spɔɪl"], stress: 0, steps: "s - spɔɪ - [spɔɪl]" },
+                { w: "<b>lev</b>el", ipa_parts: ["lev", "əl"], stress: 0, steps: "l - le - lev - [ˈlev.əl]" },
+                { w: "<b>tell</b>", ipa_parts: ["tel"], stress: 0, steps: "t - te - [tel]" },
+                { w: "<b>vil</b>lage", ipa_parts: ["vɪl", "ɪdʒ"], stress: 0, steps: "v - vɪ - vɪl - [ˈvɪl.ɪdʒ]" },
+                { w: "<b>ball</b>", ipa_parts: ["bɑːl"], stress: 0, steps: "b - bɑː - [bɑːl]" }
+            ]
+        },
+        {
+            day: 35,
+            title: "R / W",
+            words: [
+                { w: "<b>re</b>ally", ipa_parts: ["riː", "əl", "i"], stress: 0, steps: "r - riː - riː.əl - [ˈriː.əl.i]" },
+                { w: "<b>read</b>y", ipa_parts: ["red", "i"], stress: 0, steps: "r - re - red - [ˈred.i]" },
+                { w: "<b>rea</b>son", ipa_parts: ["riː", "zən"], stress: 0, steps: "r - riː - [ˈriː.zən]" },
+                { w: "gi<b>raffe</b>", ipa_parts: ["dʒə", "ræf"], stress: 1, steps: "r - ræ - ræf - [dʒəˈræf]" },
+                { w: "a<b>rrive</b>", ipa_parts: ["ə", "raɪv"], stress: 1, steps: "r - raɪ - raɪv - [əˈraɪv]" },
+                { w: "<b>wa</b>ter", ipa_parts: ["wɑ:", "tər"], stress: 0, steps: "w - wɑ: - [ˈwɑ:.tər]" },
+                { w: "<b>weath</b>er", ipa_parts: ["weð", "ər"], stress: 0, steps: "w - we - weð - [ˈweð.ər]" },
+                { w: "<b>week</b>end", ipa_parts: ["wiːk", "end"], stress: 0, steps: "w - wiː - wiːk - [ˈwiːk.end]" },
+                { w: "a<b>ware</b>", ipa_parts: ["ə", "wer"], stress: 1, steps: "w - wer - [əˈwer]" },
+                { w: "<b>home</b>work", ipa_parts: ["hoʊm", "wɜ:rk"], stress: 0, steps: "h - hoʊ - hoʊm - [ˈhoʊm.wɜ:rk]" }
+            ]
+        },
+        {
+            day: 36,
+            title: "rl / Y",
+            words: [
+                { w: "<b>re</b>al", ipa_parts: ["riː", "əl"], stress: 0, steps: "r - riː - [ˈriː.əl]" },
+                { w: "<b>reg</b>ular", ipa_parts: ["reg", "jə", "lər"], stress: 0, steps: "r - re - reg - reg.jə - [ˈreg.jə.lər]" },
+                { w: "<b>girl</b>", ipa_parts: ["gɜ:rl"], stress: 0, steps: "g - gɜ:r - [gɜ:rl]" },
+                { w: "<b>ear</b>ly", ipa_parts: ["ɜ:r", "li"], stress: 0, steps: "ɜ:r - [ˈɜ:r.li]" },
+                { w: "<b>world</b>", ipa_parts: ["wɜ:rld"], stress: 0, steps: "w - wɜ:r - [wɜ:rld]" },
+                { w: "<b>yell</b>ow", ipa_parts: ["yel", "oʊ"], stress: 0, steps: "y - yel - [ˈyel.oʊ]" },
+                { w: "your<b>self</b>", ipa_parts: ["jər", "self"], stress: 1, steps: "s - se - self - [jərˈself]" },
+                { w: "u<b>nique</b>", ipa_parts: ["ju", "niːk"], stress: 1, steps: "n - niː - niːk - [juˈniːk]" },
+                { w: "<b>val</b>ue", ipa_parts: ["væl", "juː"], stress: 0, steps: "v - væ - væl - [ˈvæl.juː]" },
+                { w: "<b>vol</b>ume", ipa_parts: ["vɑːl", "juːm"], stress: 0, steps: "v - vɑː - vɑːl - [ˈvɑːl.juːm]" }
+            ]
+        },
+        {
+            day: 37,
+            title: "CH / J",
+            words: [
+                { w: "<b>chil</b>dren", ipa_parts: ["tʃɪl", "drən"], stress: 0, steps: "tʃ - tʃɪ - tʃɪl - [ˈtʃɪl.drən]" },
+                { w: "<b>chick</b>en", ipa_parts: ["tʃɪk", "ɪn"], stress: 0, steps: "tʃ - tʃɪ - tʃɪk - [ˈtʃɪk.ɪn]" },
+                { w: "<b>chal</b>lenge", ipa_parts: ["tʃæl", "ɪndʒ"], stress: 0, steps: "tʃ - tʃæ - tʃæl - [ˈtʃæl.ɪndʒ]" },
+                { w: "a<b>chieve</b>", ipa_parts: ["ə", "tʃiːv"], stress: 1, steps: "tʃ - tʃiː - tʃiːv - [əˈtʃiːv]" },
+                { w: "<b>stretch</b>", ipa_parts: ["stretʃ"], stress: 0, steps: "s - str - [stretʃ]" },
+                { w: "<b>jeal</b>ous", ipa_parts: ["dʒel", "əs"], stress: 0, steps: "dʒ - dʒe - dʒel - [ˈdʒel.əs]" },
+                { w: "<b>ju</b>nior", ipa_parts: ["dʒuː", "njər"], stress: 0, steps: "dʒ - dʒuː - [ˈdʒuː.njər]" },
+                { w: "in<b>ject</b>", ipa_parts: ["ɪn", "dʒekt"], stress: 1, steps: "dʒ - dʒe - dʒekt - [ɪnˈdʒekt]" },
+                { w: "<b>know</b>ledge", ipa_parts: ["nɑː", "lɪdʒ"], stress: 0, steps: "n - nɑː - [ˈnɑː.lɪdʒ]" },
+                { w: "<b>judge</b>", ipa_parts: ["dʒʌdʒ"], stress: 0, steps: "dʒ - dʒʌ - [dʒʌdʒ]" }
+            ]
+        },
+        {
+            day: 38,
+            title: "M / N / NG",
+            words: [
+                { w: "<b>mon</b>ey", ipa_parts: ["mʌn", "i"], stress: 0, steps: "m - mʌ - mʌn - [ˈmʌn.i]" },
+                { w: "<b>mag</b>net", ipa_parts: ["mæg", "nət"], stress: 0, steps: "m - mæ - mæg - [ˈmæg.nət]" },
+                { w: "ma<b>chine</b>", ipa_parts: ["mə", "ʃiːn"], stress: 1, steps: "ʃ - ʃiː - ʃiːn - [məˈʃiːn]" },
+                { w: "<b>noth</b>ing", ipa_parts: ["nʌθ", "ɪŋ"], stress: 0, steps: "n - nʌ - nʌθ - [ˈnʌθ.ɪŋ]" },
+                { w: "<b>neigh</b>bor", ipa_parts: ["neɪ", "bər"], stress: 0, steps: "n - neɪ - [ˈneɪ.bər]" },
+                { w: "e<b>nough</b>", ipa_parts: ["ə", "nʌf"], stress: 1, steps: "n - nʌ - nʌf - [əˈnʌf]" },
+                { w: "<b>funn</b>y", ipa_parts: ["fʌn", "i"], stress: 0, steps: "f - fʌ - fʌn - [ˈfʌn.i]" },
+                { w: "<b>sing</b>er", ipa_parts: ["sɪŋ", "ər"], stress: 0, steps: "s - sɪ - sɪŋ - [ˈsɪŋ.ər]" },
+                { w: "<b>fing</b>er", ipa_parts: ["fɪŋ", "ɡər"], stress: 0, steps: "f - fɪ - fɪŋ - [ˈfɪŋ.ɡər]" },
+                { w: "<b>lon</b>gest", ipa_parts: ["lɑːŋ", "ɡɪst"], stress: 0, steps: "l - lɑː - lɑːŋ - [ˈlɑːŋ.ɡɪst]" }
+            ]
+        }
+    ];
+
+    // 현재 재생 중인 오디오를 추적해서 소리가 겹치지 않게 합니다.
+    let currentAudio = null;
+
+    // 오디오 재생 함수 (내부 음원 파일 사용)
+    function playWordAudio(word, rate) {
+        // 재생 중인 기존 오디오가 있다면 정지
+        if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+        }
+
+        // HTML 태그를 제거하고 소문자로 변환한 뒤 공백을 없애 파일명 생성 (예: attention.mp3)
+        const cleanWord = word.replace(/<[^>]+>/g, '').toLowerCase().trim();
+        const audioPath = `audio/${cleanWord}.mp3`; 
+
+        currentAudio = new Audio(audioPath);
+        currentAudio.playbackRate = rate;
+        
+        // 0.25배속처럼 느리게 재생할 때 음정이 너무 낮아지는 것을 방지 (브라우저 지원에 따라 다름)
+        currentAudio.preservesPitch = true; 
+
+        // 음원 재생 및 에러 처리 (파일이 없을 경우 알림)
+        currentAudio.play().catch(error => {
+            console.error("음원 재생 오류:", error);
+            alert(`음원 파일을 찾을 수 없습니다: ${audioPath}\nHTML 파일과 같은 폴더에 'audio' 폴더를 만들고 '${cleanWord}.mp3' 파일을 넣어주세요.`);
+        });
+    }
+
+    const dayButtonsContainer = document.getElementById('dayButtons');
+    const selectedDayTitle = document.getElementById('selectedDayTitle');
+    const wordListContainer = document.getElementById('wordList');
+
+    wordData.forEach((data, index) => {
+        const btn = document.createElement('button');
+        btn.classList.add('day-btn');
+        btn.innerText = `Day ${data.day}`;
+        btn.addEventListener('click', () => selectDay(index));
+        dayButtonsContainer.appendChild(btn);
+    });
+
+    function selectDay(index) {
+        const data = wordData[index];
+        const buttons = document.querySelectorAll('.day-btn');
+        buttons.forEach((b, i) => {
+            if (i === index) b.classList.add('active');
+            else b.classList.remove('active');
+        });
+
+        selectedDayTitle.style.display = 'block';
+        selectedDayTitle.innerText = `Day ${data.day}: ${data.title}`;
+        wordListContainer.innerHTML = '';
+
+        data.words.forEach(wordObj => {
+            const row = document.createElement('div');
+            row.classList.add('word-row');
+
+            // 1. 단어 카드 영역 (세로 정렬을 위한 래퍼 추가)
+            const wordCol = document.createElement('div');
+            wordCol.classList.add('word-col');
+
+            const wordCard = document.createElement('div');
+            wordCard.classList.add('word-card-main');
+            wordCard.innerHTML = wordObj.w; 
+            wordCol.appendChild(wordCard);
+
+            // 오디오 재생 버튼 그룹 추가
+            const audioGroup = document.createElement('div');
+            audioGroup.classList.add('audio-btn-group');
+
+            // 텍스트 추출 (HTML <b> 태그 등을 제거하여 순수 단어만 남김)
+            const plainWord = wordObj.w.replace(/<[^>]+>/g, '');
+
+            const btnNormal = document.createElement('button');
+            btnNormal.classList.add('audio-btn');
+            btnNormal.innerText = '1배속';
+            btnNormal.onclick = () => playWordAudio(plainWord, 1.0);
+
+            const btnSlow = document.createElement('button');
+            btnSlow.classList.add('audio-btn');
+            btnSlow.innerText = '0.25배속';
+            btnSlow.onclick = () => playWordAudio(plainWord, 0.25);
+
+            audioGroup.appendChild(btnNormal);
+            audioGroup.appendChild(btnSlow);
+            wordCol.appendChild(audioGroup);
+
+            row.appendChild(wordCol);
+
+            // 2. 오른쪽 그룹 컨테이너 (음절카드들 + 발음 순서)
+            const rightGroup = document.createElement('div');
+            rightGroup.classList.add('right-content-group');
+
+            // 2-1. 음절 카드 컨테이너
+            const syllableContainer = document.createElement('div');
+            syllableContainer.classList.add('syllable-container');
+
+            wordObj.ipa_parts.forEach((ipaText, idx) => {
+                const card = document.createElement('div');
+                card.classList.add('syllable-card');
+                card.innerText = ipaText;
+                if (idx === wordObj.stress) {
+                    card.classList.add('syllable-strong');
+                } else {
+                    card.classList.add('syllable-weak');
+                }
+                syllableContainer.appendChild(card);
+            });
+            rightGroup.appendChild(syllableContainer);
+
+            // 2-2. 발음 빌드업 텍스트 (Build-up 글자 삭제 및 괄호만 표시)
+            if (wordObj.steps) {
+                const stepBox = document.createElement('div');
+                stepBox.classList.add('step-box');
+                stepBox.innerHTML = `<span class="step-highlight">${wordObj.steps}</span>`;
+                rightGroup.appendChild(stepBox);
+            }
+
+            row.appendChild(rightGroup);
+            wordListContainer.appendChild(row);
+        });
+    }
+
+    const bpm = 100;
+    const beatsPerMeasure = 2; 
+    let audioContext = null;
+    let noiseBuffer = null;
+    let isPlaying = false;
+    let currentBeat = 0; 
+    let nextNoteTime = 0.0;
+    let timerID = null;
+    const lookahead = 25.0; 
+    const scheduleAheadTime = 0.1; 
+    
+    const playBtn = document.getElementById('playBtn');
+    const visualDisplay = document.getElementById('visualDisplay');
+
+    function initAudio() {
+        if (!audioContext) {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            audioContext = new AudioContext();
+            
+            const emptySource = audioContext.createBufferSource();
+            if(audioContext.createBuffer) {
+                const buffer = audioContext.createBuffer(1, 1, 22050);
+                emptySource.buffer = buffer;
+                emptySource.connect(audioContext.destination);
+                emptySource.start(0);
+            }
+            createNoiseBuffer();
+        }
+        if (audioContext.state === 'suspended') {
+            audioContext.resume();
+        }
+    }
+
+    function createNoiseBuffer() {
+        if (!audioContext) return;
+        const bufferSize = audioContext.sampleRate * 1.0; 
+        const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+            data[i] = (Math.random() * 2 - 1);
+        }
+        noiseBuffer = buffer;
+    }
+
+    function playClapSound(time) {
+        if (!audioContext || !noiseBuffer) return;
+        const source = audioContext.createBufferSource();
+        source.buffer = noiseBuffer;
+        const filter = audioContext.createBiquadFilter();
+        filter.type = "lowpass"; 
+        filter.frequency.value = 2000; 
+        const envelope = audioContext.createGain();
+        envelope.gain.setValueAtTime(1.25, time); 
+        envelope.gain.exponentialRampToValueAtTime(0.01, time + 0.15); 
+        source.connect(filter);
+        filter.connect(envelope);
+        envelope.connect(audioContext.destination);
+        source.start(time);
+        source.stop(time + 0.2);
+    }
+
+    function nextNote() {
+        const secondsPerBeat = 60.0 / bpm;
+        nextNoteTime += secondsPerBeat;
+        currentBeat++;
+        if (currentBeat >= beatsPerMeasure) {
+            currentBeat = 0;
+        }
+    }
+
+    function scheduleNote(beatNumber, time) {
+        if (beatNumber === 0) {
+            playClapSound(time);
+        }
+        const drawTime = (time - audioContext.currentTime) * 1000;
+        setTimeout(() => {
+            updateVisual(beatNumber);
+        }, Math.max(0, drawTime));
+    }
+
+    function scheduler() {
+        while (nextNoteTime < audioContext.currentTime + scheduleAheadTime) {
+            scheduleNote(currentBeat, nextNoteTime);
+            nextNote();
+        }
+        timerID = window.setTimeout(scheduler, lookahead);
+    }
+
+    function updateVisual(beatNumber) {
+        if (beatNumber === 0) {
+            visualDisplay.innerText = "👏🏻";
+            visualDisplay.style.transform = "scale(1.3)"; 
+        } else {
+            visualDisplay.innerText = "🫸🏻 🫷🏻";
+            visualDisplay.style.transform = "scale(1.0)"; 
+        }
+    }
+
+    playBtn.addEventListener('click', function() {
+        initAudio();
+        isPlaying = !isPlaying;
+        if (isPlaying) {
+            currentBeat = 0;
+            nextNoteTime = audioContext.currentTime + 0.1;
+            scheduler();
+            this.innerText = "STOP";
+            this.classList.add("playing");
+        } else {
+            window.clearTimeout(timerID);
+            visualDisplay.innerText = "🫸🏻 🫷🏻";
+            visualDisplay.style.transform = "scale(1.0)";
+            this.innerText = "START";
+            this.classList.remove("playing");
+        }
+    });
+</script>
+</body>
+</html>
