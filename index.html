@@ -163,7 +163,6 @@
             border-bottom: 1px solid #efebe9;
         }
 
-        /* 상단: 단어 카드와 음절 카드가 무조건 한 줄에 나오도록 설정 */
         .word-top-section {
             display: flex;
             flex-direction: row; 
@@ -179,7 +178,6 @@
             display: none; 
         }
 
-        /* 1. 단어 카드 & 오디오 버튼 래퍼 */
         .word-col {
             display: flex;
             flex-direction: column;
@@ -206,7 +204,6 @@
         }
         .word-card-main b { font-weight: 900; }
 
-        /* 오디오 버튼 그룹 */
         .audio-btn-group {
             display: flex;
             gap: 6px;
@@ -231,7 +228,6 @@
         .audio-btn:hover { background-color: #ffe0b2; }
         .audio-btn:active { transform: scale(0.95); }
 
-        /* 2. 발음기호 카드 컨테이너 */
         .syllable-container {
             display: flex;
             align-items: center;
@@ -253,27 +249,23 @@
             box-sizing: border-box;
         }
         
-        /* 1강세 (주황색 실선) */
         .syllable-strong {
             border: 3px solid #ff9800;
             color: #3e2723;
             font-weight: 900;
         }
         
-        /* 2강세 (주황색 점선, 기본 폰트 색상) */
         .syllable-secondary {
             border: 2px dashed #ff9800; 
             color: #3e2723; 
             font-weight: 700;
         }
         
-        /* 약강세 (회색 점선) */
         .syllable-weak {
             border: 2px dashed #bcaaa4;
             color: #8d6e63;
         }
 
-        /* 3. 발음 연습 순서 (Step by Step) 스타일 */
         .step-box {
             background-color: #fff3e0;
             border-left: 5px solid #ffcc80;
@@ -284,7 +276,6 @@
             line-height: 1.6;
             width: 100%; 
             box-sizing: border-box;
-            /* 핵심 변경: 단어가 중간에 쪼개지지 않고 통째로 다음 줄로 넘어가도록 설정 */
             word-break: keep-all; 
             overflow-wrap: break-word; 
         }
@@ -293,7 +284,6 @@
             font-weight: 700;
         }
 
-        /* 모바일 화면 전용 디자인 */
         @media (max-width: 600px) {
             .word-top-section { gap: 8px; }
             .word-col { width: 110px; }
@@ -357,7 +347,7 @@
         ]},
         { day: 26, title: "P / B", words: [
             { w: "<b>peo</b>ple", ipa_parts: ["piː", "pəl"], stress: 0, steps: "p - p - piː - piː - ˈpiː.pəl" },
-            { w: "<b>pa</b>per", ipa_parts: ["peɪ", "pər"], stress: 0, steps: "p - p - peɪ - peɪ - ˈpeɪ.pər" },
+            { w: "<b>pa</b>paper", ipa_parts: ["peɪ", "pər"], stress: 0, steps: "p - p - peɪ - peɪ - ˈpeɪ.pər" },
             { w: "<b>pu</b>ppy", ipa_parts: ["pʌ", "pi"], stress: 0, steps: "p - p - pʌ - pʌ - ˈpʌ.pi" },
             { w: "Ja<b>pan</b>", ipa_parts: ["dʒə", "pæn"], stress: 1, steps: "p - p - pæ - pæ - pæn - dʒəˈpæn" },
             { w: "<b>happ</b>y", ipa_parts: ["hæp", "i"], stress: 0, steps: "h - h - hæ - hæ - hæp - ˈhæp.i" },
@@ -389,7 +379,7 @@
             { w: "<b>ti</b>tle", ipa_parts: ["taɪ", "təl"], stress: 0, steps: "t - t - taɪ - taɪ - ˈtaɪ.təl" },
             { w: "<b>la</b>dy", ipa_parts: ["leɪ", "di"], stress: 0, steps: "l - l - leɪ - leɪ - ˈleɪ.di" },
             { w: "<b>stud</b>y", ipa_parts: ["stʌd", "i"], stress: 0, steps: "s - s - stʌ - stʌ - stʌd - ˈstʌd.i" },
-            { w: "<b>ladd</b>er", ipa_parts: ["læd", "ər"], stress: 0, steps: "l - l - læ - læ - læd - ˈlæd.ər" }
+            { w: "<b>ladd</b>er", ipa_parts: ["læd", "ər"], stress: 0, steps: "l - l - læ - l - læd - ˈladd.ər" }
         ]},
         { day: 29, title: "Stop T/D, No T", words: [
             { w: "<b>cur</b>tain", ipa_parts: ["kɜ:r", "tən"], stress: 0, steps: "k - k - kɜ:r - kɜ:r - ˈkɜ:r.tən" },
@@ -424,8 +414,8 @@
             { w: "<b>vis</b>ion", ipa_parts: ["vɪʒ", "ən"], stress: 0, steps: "v - v - vɪ - vɪ - vɪʒ - ˈvɪʒ.ən" },
             { w: "<b>a</b>sia", ipa_parts: ["eɪ", "ʒə"], stress: 0, steps: "eɪ - eɪ - ˈeɪ.ʒə" },
             { w: "<b>lei</b>sure", ipa_parts: ["li:ʒ", "ər"], stress: 0, steps: "l - l - li: - li: - li:ʒ - ˈli:ʒ.ər" },
-            { w: "ma<b>ssage</b>", ipa_parts: ["mə", "sɑ:ʒ"], stress: 1, steps: "s - s - sɑ: - sɑ: - sɑ:ʒ - məˈsɑ:ʒ" },
-            { w: "ga<b>rage</b>", ipa_parts: ["ɡə", "rɑ:ʒ"], stress: 1, steps: "r - r - rɑ: - rɑ: - rɑ:ʒ - ɡəˈrɑ:ʒ" }
+            { w: "ma<b>ssage</b>", ipa_parts: ["mə", "sɑ:ʒ"], stress: 1, steps: "s - s - sɑ: - sɑ: - sɑ:ʒ - m어ˈsɑ:ʒ" },
+            { w: "ga<b>rage</b>", ipa_parts: ["ɡə", "rɑ:ʒ"], stress: 1, steps: "r - r - rɑ: - rɑ: - rɑ:ʒ - ɡ어ˈrɑ:ʒ" }
         ]},
         { day: 32, title: "F / V", words: [
             { w: "<b>fin</b>ger", ipa_parts: ["fɪŋ", "ɡər"], stress: 0, steps: "f - f - fɪ - fɪ - fɪŋ - ˈfɪŋ.ɡər" },
@@ -455,7 +445,7 @@
             { w: "<b>lem</b>on", ipa_parts: ["lem", "ən"], stress: 0, steps: "l - l - le - le - lem - ˈlem.ən" },
             { w: "<b>lis</b>ten", ipa_parts: ["lɪs", "ən"], stress: 0, steps: "l - l - lɪ - lɪ - lɪs - ˈlɪs.ən" },
             { w: "lo<b>ca</b>tion", ipa_parts: ["loʊ", "keɪ", "ʃən"], stress: 1, secondary_stress: 0, steps: "k - k - keɪ - keɪ - keɪ.ʃən - ˌloʊˈkeɪ.ʃən" },
-            { w: "po<b>lice</b>", ipa_parts: ["pə", "liːs"], stress: 1, steps: "l - l - liː - liː - liːs - pəˈliːs" },
+            { w: "po<b>police</b>", ipa_parts: ["pə", "liːs"], stress: 1, steps: "l - l - liː - liː - liːs - pəˈliːs" },
             { w: "e<b>lev</b>en", ipa_parts: ["ə", "lev", "ən"], stress: 1, steps: "l - l - le - le - lev - lev.ən - əˈlev.ən" },
             { w: "<b>spoil</b>", ipa_parts: ["spɔɪl"], stress: 0, steps: "s - s - spɔɪ - spɔɪ - spɔɪl" },
             { w: "<b>lev</b>el", ipa_parts: ["lev", "əl"], stress: 0, steps: "l - l - le - le - lev - ˈlev.əl" },
@@ -510,6 +500,78 @@
             { w: "<b>sing</b>er", ipa_parts: ["sɪŋ", "ər"], stress: 0, steps: "s - s - sɪ - sɪ - sɪŋ - ˈsɪŋ.ər" },
             { w: "<b>fing</b>er", ipa_parts: ["fɪŋ", "ɡər"], stress: 0, steps: "f - f - fɪ - fɪ - fɪŋ - ˈfɪŋ.ɡər" },
             { w: "<b>lon</b>gest", ipa_parts: ["lɑːŋ", "ɡɪst"], stress: 0, steps: "l - l - lɑː - lɑː - lɑːŋ - ˈlɑːŋ.ɡɪst" }
+        ]},
+        { day: 39, title: "pl, pr, bl, br", words: [
+            { w: "<b>plea</b>sure", ipa_parts: ["pleʒ", "ər"], stress: 0, steps: "p - p - ple - ple - pleʒ - ˈpleʒ.ər" },
+            { w: "<b>please</b>", ipa_parts: ["pliːz"], stress: 0, steps: "p - p - pliː - pliː - pliːz" },
+            { w: "<b>plen</b>ty", ipa_parts: ["plen", "ti"], stress: 0, steps: "p - p - ple - ple - plen - plen.ti - ˈplen.ti" },
+            { w: "<b>prod</b>uct", ipa_parts: ["prɑː", "dʌkt"], stress: 0, steps: "p - p - prɑː - prɑː - prɑː.dʌkt - ˈprɑː.dʌkt" },
+            { w: "<b>prac</b>tice", ipa_parts: ["præk", "tɪs"], stress: 0, steps: "p - p - præ - præ - præk - præk.tɪs - ˈpræk.tɪs" },
+            { w: "<b>bleed</b>", ipa_parts: ["bliːd"], stress: 0, steps: "b - b - bliː - bliː - bliːd" },
+            { w: "<b>blow</b>", ipa_parts: ["bloʊ"], stress: 0, steps: "b - b - bloʊ - bloʊ" },
+            { w: "<b>blos</b>som", ipa_parts: ["blɑː", "səm"], stress: 0, steps: "b - b - blɑː - blɑː - blɑː.səm - ˈblɑː.səm" },
+            { w: "<b>break</b>", ipa_parts: ["breɪk"], stress: 0, steps: "b - b - breɪ - breɪ - breɪk" },
+            { w: "<b>cel</b>ebrate", ipa_parts: ["sel", "ə", "breɪt"], stress: 2, steps: "b - b - bre - bre - breɪ - breɪt - sel.ə.breɪt - ˈsel.ə.breɪt" }
+        ]},
+        { day: 40, title: "cl, cr, gl, gr", words: [
+            { w: "<b>click</b>", ipa_parts: ["klɪk"], stress: 0, steps: "k - k - klɪ - klɪ - klɪk" },
+            { w: "<b>clean</b>", ipa_parts: ["kliːn"], stress: 0, steps: "k - k - kliː - kliː - kliːn" },
+            { w: "<b>clev</b>er", ipa_parts: ["klev", "ər"], stress: 0, steps: "k - k - kle - kle - klev - klev.ər - ˈklev.ər" },
+            { w: "<b>cri</b>sis", ipa_parts: ["kraɪ", "sɪs"], stress: 0, steps: "k - k - kraɪ - kraɪ - kraɪ.sɪs - ˈkraɪ.sɪs" },
+            { w: "<b>cra</b>zy", ipa_parts: ["kreɪ", "zi"], stress: 0, steps: "k - k - kreɪ - kreɪ - kreɪ.zi - ˈkreɪ.zi" },
+            { w: "<b>glad</b>", ipa_parts: ["ɡlæd"], stress: 0, steps: "ɡ - ɡ - ɡlæ - ɡlæ - ɡlæd" },
+            { w: "<b>glue</b>", ipa_parts: ["ɡluː"], stress: 0, steps: "ɡ - ɡ - ɡluː - ɡluː" },
+            { w: "<b>glo</b>bal", ipa_parts: ["ɡloʊ", "bəl"], stress: 0, steps: "ɡ - ɡ - ɡloʊ - ɡloʊ - ɡloʊ.bəl - ˈɡloʊ.bəl" },
+            { w: "<b>green</b>", ipa_parts: ["ɡriːn"], stress: 0, steps: "ɡ - ɡ - ɡriː - ɡriː - ɡriːn" },
+            { w: "<b>grad</b>uate", ipa_parts: ["ɡrædʒ", "u", "eɪt"], stress: 0, steps: "ɡ - ɡ - ɡræ - ɡræ - ɡrædʒ - ɡrædʒ.u - ɡrædʒ.u.eɪt - ˈɡrædʒ.u.eɪt" }
+        ]},
+        { day: 41, title: "tr, dr, fl, fr", words: [
+            { w: "<b>tree</b>", ipa_parts: ["triː"], stress: 0, steps: "t - t - triː - triː" },
+            { w: "<b>trav</b>el", ipa_parts: ["træv", "əl"], stress: 0, steps: "t - t - træ - træ - træv - træv.əl - ˈtræv.əl" },
+            { w: "<b>dream</b>", ipa_parts: ["driːm"], stress: 0, steps: "d - d - driː - driː - driːm" },
+            { w: "<b>drink</b>", ipa_parts: ["drɪŋk"], stress: 0, steps: "d - d - drɪ - drɪ - drɪŋk" },
+            { w: "<b>hun</b>dred", ipa_parts: ["hʌn", "drəd"], stress: 0, steps: "h - h - hʌ - hʌ - hʌn - hʌn.drəd - ˈhʌn.drəd" },
+            { w: "<b>flea</b>", ipa_parts: ["fliː"], stress: 0, steps: "f - f - fliː - fliː" },
+            { w: "<b>flu</b>", ipa_parts: ["fluː"], stress: 0, steps: "f - f - fluː - fluː" },
+            { w: "<b>flood</b>", ipa_parts: ["flʌd"], stress: 0, steps: "f - f - flʌ - flʌ - flʌd" },
+            { w: "<b>free</b>", ipa_parts: ["friː"], stress: 0, steps: "f - f - friː - friː" },
+            { w: "<b>friend</b>", ipa_parts: ["frend"], stress: 0, steps: "f - f - fre - fre - frend" }
+        ]},
+        { day: 42, title: "sk, sp, st, sw, tw", words: [
+            { w: "<b>sky</b>", ipa_parts: ["skaɪ"], stress: 0, steps: "s - s - skaɪ - skaɪ" },
+            { w: "<b>skirt</b>", ipa_parts: ["skɜ:rt"], stress: 0, steps: "s - s - skɜ:r - skɜ:r - skɜ:rt" },
+            { w: "<b>speed</b>", ipa_parts: ["spiːd"], stress: 0, steps: "s - s - spiː - spiː - spiːd" },
+            { w: "<b>spoon</b>", ipa_parts: ["spuːn"], stress: 0, steps: "s - s - spuː - spuː - spuːn" },
+            { w: "<b>steak</b>", ipa_parts: ["steɪk"], stress: 0, steps: "s - s - steɪ - steɪ - steɪk" },
+            { w: "<b>stay</b>", ipa_parts: ["steɪ"], stress: 0, steps: "s - s - steɪ - steɪ" },
+            { w: "<b>swim</b>", ipa_parts: ["swɪm"], stress: 0, steps: "s - s - swɪ - swɪ - swɪm" },
+            { w: "<b>sweet</b>", ipa_parts: ["swiːt"], stress: 0, steps: "s - s - swiː - swiː - swiːt" },
+            { w: "<b>twin</b>", ipa_parts: ["twɪn"], stress: 0, steps: "t - t - twɪ - twɪ - twɪn" },
+            { w: "<b>twelve</b>", ipa_parts: ["twelv"], stress: 0, steps: "t - t - twel - twel - twelv" }
+        ]},
+        { day: 43, title: "thr, shr, kw, skw, skr, spr, str", words: [
+            { w: "<b>three</b>", ipa_parts: ["θriː"], stress: 0, steps: "θ - θ - θriː - θriː" },
+            { w: "<b>shrimp</b>", ipa_parts: ["ʃrɪmp"], stress: 0, steps: "ʃ - ʃ - ʃrɪ - ʃrɪ - ʃrɪmp" },
+            { w: "<b>qui</b>et", ipa_parts: ["kwaɪ", "ət"], stress: 0, steps: "k - k - kwaɪ - kwaɪ - kwaɪ.ət - ˈkwaɪ.ət" },
+            { w: "re<b>quest</b>", ipa_parts: ["rɪ", "kwest"], stress: 1, steps: "k - k - kwe - kwe - kwest - rɪˈkwest" },
+            { w: "<b>squat</b>", ipa_parts: ["skwɑːt"], stress: 0, steps: "s - s - skwɑː - skwɑː - skwɑːt" },
+            { w: "<b>scream</b>", ipa_parts: ["skriːm"], stress: 0, steps: "s - s - skriː - skriː - skriːm" },
+            { w: "<b>scram</b>ble", ipa_parts: ["skræm", "bəl"], stress: 0, steps: "s - s - skræ - skræ - skræm - skræm.bəl - ˈskræm.bəl" },
+            { w: "<b>spring</b>", ipa_parts: ["sprɪŋ"], stress: 0, steps: "s - s - sprɪ - sprɪ - sprɪŋ" },
+            { w: "<b>street</b>", ipa_parts: ["striːt"], stress: 0, steps: "s - s - striː - striː - striːt" },
+            { w: "<b>strong</b>", ipa_parts: ["strɑːŋ"], stress: 0, steps: "s - s - strɑː - strɑː - strɑːŋ" }
+        ]},
+        { day: 44, title: "3음절/4음절 긴 단어", words: [
+            { w: "<b>tel</b>ephone", ipa_parts: ["tel", "ə", "foʊn"], stress: 0, steps: "t - t - te - te - tel - tel.ə - tel.ə.foʊn - ˈtel.ə.foʊn" },
+            { w: "<b>el</b>ephant", ipa_parts: ["el", "ə", "fənt"], stress: 0, steps: "e - e - el - el.ə - el.ə.fənt - ˈel.ə.fənt" },
+            { w: "<b>choc</b>olate", ipa_parts: ["tʃɑːk", "lət"], stress: 0, steps: "tʃ - tʃ - tʃɑː - tʃɑː - tʃɑːk - tʃɑːk.lət - ˈtʃɑːk.lət" },
+            { w: "de<b>li</b>cious", ipa_parts: ["dɪ", "lɪʃ", "əs"], stress: 1, steps: "l - l - lɪ - lɪ - lɪʃ - lɪʃ.əs - dɪˈlɪʃ.əs" },
+            { w: "<b>for</b>tunate", ipa_parts: ["fɔːr", "tʃən", "ət"], stress: 0, steps: "f - f - fɔːr - fɔːr - fɔːr.tʃən - fɔːr.tʃən.ət - ˈfɔːr.tʃən.ət" },
+            { w: "communi<b>ca</b>tion", ipa_parts: ["kə", "mjuː", "nɪ", "keɪ", "ʃən"], stress: 3, steps: "k - k - ke - ke - keɪ - keɪ.ʃən - nɪ.keɪ.ʃən - mjuː.nɪ.keɪ.ʃən - kə.mjuː.nɪ.keɪ.ʃən - kəˌmjuː.nɪˈkeɪ.ʃən" },
+            { w: "vo<b>cab</b>ulary", ipa_parts: ["voʊ", "kæb", "jə", "ler", "i"], stress: 1, steps: "k - k - kæ - kæ - kæb - kæb.jə - kæb.jə.ler - kæb.jə.ler.i - voʊˈkæb.jə.ler.i" },
+            { w: "uni<b>ver</b>sity", ipa_parts: ["juː", "nə", "vɜːr", "sə", "t̬i"], stress: 2, steps: "v - v - vɜːr - vɜːr - vɜːr.sə - vɜːr.sə.t̬i - nə.vɜːr.sə.t̬i - juː.nə.vɜːr.sə.t̬i - ˌjuː.nəˈvɜːr.sə.t̬i" },
+            { w: "cele<b>bra</b>tion", ipa_parts: ["sel", "ə", "breɪ", "ʃən"], stress: 2, steps: "b - b - bre - bre - breɪ - breɪ.ʃən - ə.breɪ.ʃən - sel.ə.breɪ.ʃən - ˌsel.əˈbreɪ.ʃən" },
+            { w: "<b>dic</b>tionary", ipa_parts: ["dɪk", "ʃən", "er", "i"], stress: 0, steps: "d - d - dɪ - dɪ - dɪk - dɪk.ʃən - dɪk.ʃən.er - dɪk.ʃən.er.i - ˈdɪk.ʃən.er.i" }
         ]}
     ];
 
@@ -562,11 +624,9 @@
             const row = document.createElement('div');
             row.classList.add('word-row');
 
-            // 상단 영역 (단어 카드 + 음절 카드)
             const topSection = document.createElement('div');
             topSection.classList.add('word-top-section');
 
-            // 1. 단어 카드 영역
             const wordCol = document.createElement('div');
             wordCol.classList.add('word-col');
 
@@ -575,7 +635,6 @@
             wordCard.innerHTML = wordObj.w; 
             wordCol.appendChild(wordCard);
 
-            // 오디오 버튼
             const audioGroup = document.createElement('div');
             audioGroup.classList.add('audio-btn-group');
             const plainWord = wordObj.w.replace(/<[^>]+>/g, '');
@@ -596,7 +655,6 @@
 
             topSection.appendChild(wordCol);
 
-            // 2. 음절 카드 컨테이너
             const syllableContainer = document.createElement('div');
             syllableContainer.classList.add('syllable-container');
 
@@ -605,7 +663,6 @@
                 card.classList.add('syllable-card');
                 card.innerText = ipaText;
                 
-                // 강세 구분에 따른 클래스 부여
                 if (idx === wordObj.stress) {
                     card.classList.add('syllable-strong');
                 } else if (wordObj.secondary_stress !== undefined && idx === wordObj.secondary_stress) {
@@ -619,7 +676,6 @@
             topSection.appendChild(syllableContainer);
             row.appendChild(topSection);
 
-            // 3. 발음 빌드업 텍스트
             if (wordObj.steps) {
                 const stepBox = document.createElement('div');
                 stepBox.classList.add('step-box');
