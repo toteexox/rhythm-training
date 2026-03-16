@@ -199,7 +199,7 @@
             width: 100%;
             box-sizing: border-box;
             text-align: center;
-            white-space: pre-wrap; /* 띄어쓰기 강제 유지 */
+            white-space: pre-wrap; 
         }
         .word-card-main b { font-weight: 900; }
 
@@ -248,14 +248,12 @@
             white-space: nowrap;
         }
         
-        /* 내용어: 주황색 실선 */
         .syllable-strong {
             border: 3px solid #ff9800;
             color: #3e2723;
             font-weight: 900;
         }
         
-        /* 기능어: 회색 점선 */
         .syllable-weak {
             border: 2px dotted #bcaaa4;
             color: #8d6e63;
@@ -315,6 +313,7 @@
 </div>
 
 <script>
+    // --- [데이터 영역] ---
     const wordData = [
         { day: 24, title: "Schwa (슈와)", words: [
             { w: "a<b>tten</b>tion", ipa_parts: ["ə", "ten", "ʃən"], stress: 1, steps: "t - t - te - te - ten - ten.ʃən - əˈten.ʃən" },
@@ -337,7 +336,7 @@
         ]},
         { day: 26, title: "P / B", words: [
             { w: "<b>peo</b>ple", ipa_parts: ["piː", "pəl"], stress: 0, steps: "p - p - piː - piː - ˈpiː.pəl" },
-            { w: "<b>pa</b>per", ipa_parts: ["peɪ", "pər"], stress: 0, steps: "p - p - peɪ - peɪ - ˈpeɪ.pər" },
+            { w: "<b>pa</b>paper", ipa_parts: ["peɪ", "pər"], stress: 0, steps: "p - p - peɪ - peɪ - ˈpeɪ.pər" },
             { w: "<b>pu</b>ppy", ipa_parts: ["pʌ", "pi"], stress: 0, steps: "p - p - pʌ - pʌ - ˈpʌ.pi" },
             { w: "Ja<b>pan</b>", ipa_parts: ["dʒə", "pæn"], stress: 1, steps: "p - p - pæ - pæ - pæn - dʒəˈpæn" },
             { w: "<b>happ</b>y", ipa_parts: ["hæp", "i"], stress: 0, steps: "h - h - hæ - hæ - hæp - ˈhæp.i" },
@@ -590,26 +589,31 @@
         { day: 47, title: "4음절 문장", words: [
             { w: "<b>Dog barks</b> at <b>night</b>", ipa_parts: ["dɑːɡ", "bɑrks", "ət", "naɪt"], stress: 0, secondary_stress: 1, third_stress: 3 },
             { w: "He <b>reads</b> a <b>book</b>", ipa_parts: ["hi", "ridz", "ə", "bʊk"], stress: 1, secondary_stress: 3 },
-            { w: "The <b>sun sets</b> in <b>the <b>west</b>", ipa_parts: ["ðə", "sʌn", "sets", "ɪn", "ðə", "west"], stress: 1, secondary_stress: 2, third_stress: 5 },
+            { w: "The <b>sun sets</b> in the <b>west</b>", ipa_parts: ["ðə", "sʌn", "sets", "ɪn", "ðə", "west"], stress: 1, secondary_stress: 2, third_stress: 5 },
             { w: "<b>Flowers start</b> to <b>grow</b>", ipa_parts: ["ˈflaʊ.ərz", "stɑːrt", "tə", "ɡroʊ"], stress: 0, secondary_stress: 1, third_stress: 3 },
             { w: "She <b>eats red apples</b>", ipa_parts: ["ʃi", "its", "red", "ˈæp.əlz"], stress: 1, secondary_stress: 2, third_stress: 3 },
             { w: "He <b>runs very fast</b>", ipa_parts: ["hi", "rʌnz", "ˈver.i", "fæst"], stress: 1, secondary_stress: 2, third_stress: 3 },
             { w: "I <b>see</b> a <b>bird</b>", ipa_parts: ["aɪ", "si", "ə", "bɜːrd"], stress: 1, secondary_stress: 3 },
             { w: "We <b>learn new things</b>", ipa_parts: ["wi", "lɜːrn", "nu", "θɪŋz"], stress: 1, secondary_stress: 2, third_stress: 3 },
             { w: "We <b>laugh</b> a <b>lot</b>", ipa_parts: ["wi", "læf", "ə", "lɑt"], stress: 1, secondary_stress: 3 }
-        ]}
+        ] }
     ];
 
     let currentAudio = null;
 
+    // --- [음원 재생 함수 수정본] ---
     function playWordAudio(word, rate) {
         if (currentAudio) {
             currentAudio.pause();
             currentAudio.currentTime = 0;
         }
 
-        const cleanWord = word.replace(/<[^>]+>/g, '').toLowerCase().trim();
-        const audioPath = `audio/${cleanWord}.mp3`; 
+        // 1. <b> 태그 제거 및 양끝 공백 제거
+        let cleanWord = word.replace(/<[^>]+>/g, '').trim();
+        
+        // 2. URL 안전 문자로 인코딩 (공백을 %20 등으로 변환하여 GitHub Pages에서 인식 가능하게 함)
+        const encodedWord = encodeURIComponent(cleanWord);
+        const audioPath = `audio/${encodedWord}.mp3`; 
 
         currentAudio = new Audio(audioPath);
         currentAudio.playbackRate = rate;
@@ -617,7 +621,7 @@
 
         currentAudio.play().catch(error => {
             console.error("음원 재생 오류:", error);
-            alert(`음원 파일을 찾을 수 없습니다: ${audioPath}\nHTML 파일과 같은 폴더에 'audio' 폴더를 만들고 '${cleanWord}.mp3' 파일을 넣어주세요.`);
+            alert(`음원 파일을 찾을 수 없습니다.\n\n시도한 경로: ${audioPath}\n\n[해결 방법]\n1. audio 폴더에 '${cleanWord}.mp3' 파일이 있는지 확인하세요.\n2. 파일명에 대소문자가 정확한지 확인하세요.\n3. GitHub Pages에 업로드 후 1~2분 뒤에 새로고침하세요.`);
         });
     }
 
@@ -662,15 +666,14 @@
 
             const audioGroup = document.createElement('div');
             audioGroup.classList.add('audio-btn-group');
-            const plainWord = wordObj.w.replace(/<[^>]+>/g, '');
+            const originalText = wordObj.w;
 
-            // 배속 버튼들 생성
             const rates = [[1.0, '1배속'], [0.5, '0.5배속'], [0.25, '0.25배속']];
             rates.forEach(([rate, label]) => {
                 const btn = document.createElement('button');
                 btn.classList.add('audio-btn');
                 btn.innerText = label;
-                btn.onclick = () => playWordAudio(plainWord, rate);
+                btn.onclick = () => playWordAudio(originalText, rate);
                 audioGroup.appendChild(btn);
             });
 
@@ -685,7 +688,6 @@
                 card.classList.add('syllable-card');
                 card.innerText = ipaText;
                 
-                // 강세 여부 체크 (Primary, Secondary, Third)
                 const isStrong = idx === wordObj.stress || 
                                  (wordObj.secondary_stress !== undefined && idx === wordObj.secondary_stress) ||
                                  (wordObj.third_stress !== undefined && idx === wordObj.third_stress);
@@ -701,7 +703,6 @@
             topSection.appendChild(syllableContainer);
             row.appendChild(topSection);
 
-            // Day 45~47이 아닌 경우에만 훈련 단계(steps) 표시
             if (wordObj.steps && !(data.day >= 45 && data.day <= 47)) {
                 const stepBox = document.createElement('div');
                 stepBox.classList.add('step-box');
@@ -713,6 +714,7 @@
         });
     }
 
+    // --- [메트로놈 로직] ---
     const bpm = 100;
     const beatsPerMeasure = 2; 
     let audioContext = null;
