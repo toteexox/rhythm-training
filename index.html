@@ -171,7 +171,6 @@
             flex-wrap: nowrap; 
             width: 100%;
             overflow-x: auto; 
-            -ms-overflow-style: none; 
             scrollbar-width: none; 
         }
         .word-top-section::-webkit-scrollbar {
@@ -182,31 +181,31 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            width: 140px; 
+            width: 240px; 
             flex-shrink: 0;
         }
 
         .word-card-main {
             background-color: #ff9800;
             color: #3e2723;
-            border: none;
-            box-shadow: none;
-            padding: 0 10px;
+            padding: 0 15px;
             height: 60px; 
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 12px;
-            font-size: 1.4rem; 
+            font-size: 1.3rem; 
             font-weight: 400; 
             width: 100%;
             box-sizing: border-box;
+            text-align: center;
+            white-space: pre-wrap; /* 띄어쓰기 강제 유지 */
         }
         .word-card-main b { font-weight: 900; }
 
         .audio-btn-group {
             display: flex;
-            gap: 6px;
+            gap: 4px;
             width: 100%;
         }
 
@@ -217,12 +216,11 @@
             border: 1px solid #ffb74d;
             border-radius: 6px;
             padding: 6px 0;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
             white-space: nowrap; 
-            letter-spacing: -0.5px; 
         }
 
         .audio-btn:hover { background-color: #ffe0b2; }
@@ -237,32 +235,29 @@
         }
 
         .syllable-card {
-            min-width: 70px; 
+            min-width: 80px; 
             height: 60px;
             padding: 0 15px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             border-radius: 12px;
             background-color: white;
             box-sizing: border-box;
+            white-space: nowrap;
         }
         
+        /* 내용어: 주황색 실선 */
         .syllable-strong {
             border: 3px solid #ff9800;
             color: #3e2723;
             font-weight: 900;
         }
         
-        .syllable-secondary {
-            border: 2px dashed #ff9800; 
-            color: #3e2723; 
-            font-weight: 700;
-        }
-        
+        /* 기능어: 회색 점선 */
         .syllable-weak {
-            border: 2px dashed #bcaaa4;
+            border: 2px dotted #bcaaa4;
             color: #8d6e63;
         }
 
@@ -271,13 +266,12 @@
             border-left: 5px solid #ffcc80;
             padding: 15px 20px;
             border-radius: 8px; 
-            font-size: 1.2rem; 
+            font-size: 1.1rem; 
             color: #5d4037;
             line-height: 1.6;
             width: 100%; 
             box-sizing: border-box;
             word-break: keep-all; 
-            overflow-wrap: break-word; 
         }
         .step-highlight {
             color: #e65100;
@@ -286,12 +280,8 @@
 
         @media (max-width: 600px) {
             .word-top-section { gap: 8px; }
-            .word-col { width: 110px; }
-            .word-card-main { height: 50px; font-size: 1.2rem; }
-            .audio-btn { font-size: 0.75rem; padding: 5px 0; }
-            .syllable-container { gap: 6px; }
-            .syllable-card { min-width: 50px; height: 50px; font-size: 1.2rem; padding: 0 10px; }
-            .step-box { font-size: 1rem; padding: 12px 15px; }
+            .word-col { width: 190px; }
+            .syllable-card { min-width: 65px; height: 55px; font-size: 1.1rem; }
         }
 
     </style>
@@ -342,12 +332,12 @@
             { w: "<b>ham</b>ster", ipa_parts: ["hæm", "stər"], stress: 0, steps: "h - h - hæ - hæ - hæm - ˈhæm.stər" },
             { w: "<b>ho</b>bby", ipa_parts: ["hɑː", "bi"], stress: 0, steps: "h - h - hɑː - hɑː - ˈhɑː.bi" },
             { w: "be<b>hind</b>", ipa_parts: ["bɪ", "haɪnd"], stress: 1, steps: "h - h - haɪ - haɪ - haɪnd - bɪˈhaɪnd" },
-            { w: "re<b>heat</b>", ipa_parts: ["riː", "hiːt"], stress: 1, secondary_stress: 0, steps: "h - h - hiː - hiː - hiːt - ˌriːˈhiːt" },
-            { w: "un<b>happ</b>y", ipa_parts: ["ʌn", "hæp", "i"], stress: 1, secondary_stress: 0, steps: "h - h - hæ - hæ - hæp - hæp.i - ˌʌnˈhæp.i" }
+            { w: "re<b>heat</b>", ipa_parts: ["riː", "hiːt"], stress: 1, steps: "h - h - hiː - hiː - hiːt - ˌriːˈhiːt" },
+            { w: "un<b>happ</b>y", ipa_parts: ["ʌn", "hæp", "i"], stress: 1, steps: "h - h - hæ - hæ - hæp - hæp.i - ˌʌnˈhæp.i" }
         ]},
         { day: 26, title: "P / B", words: [
             { w: "<b>peo</b>ple", ipa_parts: ["piː", "pəl"], stress: 0, steps: "p - p - piː - piː - ˈpiː.pəl" },
-            { w: "<b>pa</b>paper", ipa_parts: ["peɪ", "pər"], stress: 0, steps: "p - p - peɪ - peɪ - ˈpeɪ.pər" },
+            { w: "<b>pa</b>per", ipa_parts: ["peɪ", "pər"], stress: 0, steps: "p - p - peɪ - peɪ - ˈpeɪ.pər" },
             { w: "<b>pu</b>ppy", ipa_parts: ["pʌ", "pi"], stress: 0, steps: "p - p - pʌ - pʌ - ˈpʌ.pi" },
             { w: "Ja<b>pan</b>", ipa_parts: ["dʒə", "pæn"], stress: 1, steps: "p - p - pæ - pæ - pæn - dʒəˈpæn" },
             { w: "<b>happ</b>y", ipa_parts: ["hæp", "i"], stress: 0, steps: "h - h - hæ - hæ - hæp - ˈhæp.i" },
@@ -364,14 +354,14 @@
             { w: "be<b>come</b>", ipa_parts: ["bɪ", "kʌm"], stress: 1, steps: "k - k - kʌ - kʌ - kʌm - bɪˈkʌm" },
             { w: "<b>book</b>ing", ipa_parts: ["bʊk", "ɪŋ"], stress: 0, steps: "b - b - bʊ - bʊ - bʊk - ˈbʊk.ɪŋ" },
             { w: "<b>gum</b>my", ipa_parts: ["ɡʌm", "i"], stress: 0, steps: "ɡ - ɡ - ɡʌ - ɡʌ - ɡʌm - ˈɡʌm.i" },
-            { w: "good<b>bye</b>", ipa_parts: ["ɡʊd", "baɪ"], stress: 1, secondary_stress: 0, steps: "b - b - baɪ - baɪ - ˌɡʊdˈbaɪ" },
+            { w: "good<b>bye</b>", ipa_parts: ["ɡʊd", "baɪ"], stress: 1, steps: "b - b - baɪ - baɪ - ˌɡʊdˈbaɪ" },
             { w: "be<b>gin</b>", ipa_parts: ["bɪ", "ɡɪn"], stress: 1, steps: "ɡ - ɡ - ɡɪ - ɡɪ - ɡɪn - bɪˈɡɪn" },
             { w: "a<b>gain</b>", ipa_parts: ["ə", "ɡen"], stress: 1, steps: "ɡ - ɡ - ɡe - ɡe - ɡen - əˈɡen" },
             { w: "a<b>gainst</b>", ipa_parts: ["ə", "ɡenst"], stress: 1, steps: "ɡ - ɡ - ɡe - ɡe - ɡenst - əˈɡenst" }
         ]},
         { day: 28, title: "True T/D, Flap T/D", words: [
             { w: "<b>ta</b>ble", ipa_parts: ["teɪ", "bəl"], stress: 0, steps: "t - t - teɪ - teɪ - ˈteɪ.bəl" },
-            { w: "fif<b>teen</b>", ipa_parts: ["fɪf", "tiːn"], stress: 1, secondary_stress: 0, steps: "t - t - tiː - tiː - tiːn - ˌfɪfˈtiːn" },
+            { w: "fif<b>teen</b>", ipa_parts: ["fɪf", "tiːn"], stress: 1, steps: "t - t - tiː - tiː - tiːn - ˌfɪfˈtiːn" },
             { w: "<b>ti</b>ny", ipa_parts: ["taɪ", "ni"], stress: 0, steps: "t - t - taɪ - taɪ - ˈtaɪ.ni" },
             { w: "<b>doc</b>tor", ipa_parts: ["dɑːk", "tər"], stress: 0, steps: "d - d - dɑː - dɑː - dɑːk - ˈdɑːk.tər" },
             { w: "to<b>day</b>", ipa_parts: ["tə", "deɪ"], stress: 1, steps: "d - d - deɪ - deɪ - təˈdeɪ" },
@@ -385,13 +375,13 @@
             { w: "<b>cur</b>tain", ipa_parts: ["kɜ:r", "tən"], stress: 0, steps: "k - k - kɜ:r - kɜ:r - ˈkɜ:r.tən" },
             { w: "<b>fit</b>ness", ipa_parts: ["fɪt", "nəs"], stress: 0, steps: "f - f - fɪ - fɪ - fɪt - ˈfɪt.nəs" },
             { w: "<b>butt</b>on", ipa_parts: ["bʌt", "ən"], stress: 0, steps: "b - b - bʌ - bʌ - bʌt - ˈbʌt.ən" },
-            { w: "good<b>will</b>", ipa_parts: ["ɡʊd", "wɪl"], stress: 1, secondary_stress: 0, steps: "w - w - wɪ - wɪ - wɪl - ˌɡʊdˈwɪl" },
-            { w: "<b>feed</b>back", ipa_parts: ["fiːd", "bæk"], stress: 0, secondary_stress: 1, steps: "f - f - fiː - fiː - fiːd - ˈfiːd.ˌbæk" },
-            { w: "<b>in</b>ternet", ipa_parts: ["ɪn", "tər", "net"], stress: 0, secondary_stress: 2, steps: "ɪ - ɪ - ɪn - ɪn - ɪn.tər - ˈɪn.tər.ˌnet" },
+            { w: "good<b>will</b>", ipa_parts: ["ɡʊd", "wɪl"], stress: 1, steps: "w - w - wɪ - wɪ - wɪl - ˌɡʊdˈwɪl" },
+            { w: "<b>feed</b>back", ipa_parts: ["fiːd", "bæk"], stress: 0, steps: "f - f - fiː - fiː - fiːd - ˈfiːd.ˌbæk" },
+            { w: "<b>in</b>ternet", ipa_parts: ["ɪn", "tər", "net"], stress: 0, steps: "ɪ - ɪ - ɪn - ɪn - ɪn.tər - ˈɪn.tər.ˌnet" },
             { w: "<b>cen</b>ter", ipa_parts: ["sen", "tər"], stress: 0, steps: "s - s - se - se - sen - ˈsen.tər" },
             { w: "<b>per</b>fectly", ipa_parts: ["pɜ:r", "fɪk", "li"], stress: 0, steps: "p - p - pɜ:r - pɜ:r - pɜ:r.fɪk - ˈpɜ:r.fɪk.li" },
             { w: "co<b>rrect</b>ly", ipa_parts: ["kə", "rek", "li"], stress: 1, steps: "r - r - re - re - rek - rek.li - kəˈrek.li" },
-            { w: "<b>in</b>terview", ipa_parts: ["ɪn", "tər", "vjuː"], stress: 0, secondary_stress: 2, steps: "ɪ - ɪ - ɪn - ɪn - ɪn.tər - ˈɪn.tər.ˌvjuː" }
+            { w: "<b>in</b>terview", ipa_parts: ["ɪn", "tər", "vjuː"], stress: 0, steps: "ɪ - ɪ - ɪn - ɪn - ɪn.tər - ˈɪn.tər.ˌvjuː" }
         ]},
         { day: 30, title: "S / Z", words: [
             { w: "<b>steak</b>", ipa_parts: ["steɪk"], stress: 0, steps: "s - s - steɪ - steɪ - steɪk" },
@@ -401,12 +391,12 @@
             { w: "re<b>spond</b>", ipa_parts: ["rɪ", "spɑːnd"], stress: 1, steps: "s - s - spɑː - spɑː - spɑːnd - rɪˈspɑːnd" },
             { w: "<b>zip</b>per", ipa_parts: ["zɪp", "ər"], stress: 0, steps: "z - z - zɪ - zɪ - zɪp - ˈzɪp.ər" },
             { w: "<b>ze</b>bra", ipa_parts: ["ziː", "brə"], stress: 0, steps: "z - z - ziː - ziː - ˈziː.brə" },
-            { w: "un<b>zip</b>", ipa_parts: ["ʌn", "zɪp"], stress: 1, secondary_stress: 0, steps: "z - z - zɪ - zɪ - zɪp - ˌʌnˈzɪp" },
+            { w: "un<b>zip</b>", ipa_parts: ["ʌn", "zɪp"], stress: 1, steps: "z - z - zɪ - zɪ - zɪp - ˌʌnˈzɪp" },
             { w: "<b>cou</b>sin", ipa_parts: ["kʌz", "ən"], stress: 0, steps: "k - k - kʌ - kʌ - kʌz - ˈkʌz.ən" },
             { w: "<b>cheese</b>", ipa_parts: ["tʃiːz"], stress: 0, steps: "tʃ - tʃ - tʃiː - tʃiː - tʃiːz" }
         ]},
         { day: 31, title: "SH / ZH", words: [
-            { w: "sham<b>poo</b>", ipa_parts: ["ʃæm", "puː"], stress: 1, secondary_stress: 0, steps: "p - p - puː - puː - ˌʃæmˈpuː" },
+            { w: "sham<b>poo</b>", ipa_parts: ["ʃæm", "puː"], stress: 1, steps: "p - p - puː - puː - ˌʃæmˈpuː" },
             { w: "<b>shad</b>ow", ipa_parts: ["ʃæd", "oʊ"], stress: 0, steps: "ʃ - ʃ - ʃæ - ʃæ - ʃæd - ˈʃæd.oʊ" },
             { w: "<b>show</b>er", ipa_parts: ["ʃaʊ", "ər"], stress: 0, steps: "ʃ - ʃ - ʃaʊ - ʃaʊ - ˈʃaʊ.ər" },
             { w: "<b>tiss</b>ue", ipa_parts: ["tɪʃ", "uː"], stress: 0, steps: "t - t - tɪ - tɪ - tɪʃ - ˈtɪʃ.uː" },
@@ -423,7 +413,7 @@
             { w: "be<b>fore</b>", ipa_parts: ["bɪ", "fɔːr"], stress: 1, steps: "f - f - fɔː - fɔː - fɔːr - bɪˈfɔːr" },
             { w: "<b>co</b>ffee", ipa_parts: ["kɑ:", "fi"], stress: 0, steps: "k - k - kɑ: - kɑ: - ˈkɑ:.fi" },
             { w: "<b>leaf</b>", ipa_parts: ["liːf"], stress: 0, steps: "l - l - liː - liː - liːf" },
-            { w: "vac<b>cine</b>", ipa_parts: ["væk", "siːn"], stress: 1, secondary_stress: 0, steps: "s - s - siː - siː - siːn - ˌvækˈsiːn" },
+            { w: "vac<b>cine</b>", ipa_parts: ["væk", "siːn"], stress: 1, steps: "s - s - siː - siː - siːn - ˌvækˈsiːn" },
             { w: "<b>vill</b>age", ipa_parts: ["vɪl", "ɪdʒ"], stress: 0, steps: "v - v - vɪ - vɪ - vɪl - ˈvɪl.ɪdʒ" },
             { w: "pro<b>vide</b>", ipa_parts: ["prə", "vaɪd"], stress: 1, steps: "v - v - vaɪ - vaɪ - vaɪd - prəˈvaɪd" },
             { w: "<b>dev</b>il", ipa_parts: ["dev", "əl"], stress: 0, steps: "d - d - de - de - dev - ˈdev.əl" },
@@ -432,10 +422,10 @@
         { day: 33, title: "TH(θ) / TH(ð)", words: [
             { w: "<b>thir</b>ty", ipa_parts: ["θɜ:r", "ti"], stress: 0, steps: "θ - θ - θɜ:r - θɜ:r - ˈθɜ:r.ti" },
             { w: "<b>thank</b>ful", ipa_parts: ["θæŋk", "fəl"], stress: 0, steps: "θ - θ - θæ - θæ - θæŋk - ˈθæŋk.fəl" },
-            { w: "<b>birth</b>day", ipa_parts: ["bɜ:rθ", "deɪ"], stress: 0, secondary_stress: 1, steps: "b - b - bɜ:r - bɜ:r - bɜ:rθ - ˈbɜ:rθ.ˌdeɪ" },
-            { w: "re<b>think</b>", ipa_parts: ["riː", "θɪŋk"], stress: 1, secondary_stress: 0, steps: "θ - θ - θɪ - θɪ - θɪŋk - ˌriːˈθɪŋk" },
+            { w: "<b>birth</b>day", ipa_parts: ["bɜ:rθ", "deɪ"], stress: 0, steps: "b - b - bɜ:r - bɜ:r - bɜ:rθ - ˈbɜ:rθ.ˌdeɪ" },
+            { w: "re<b>think</b>", ipa_parts: ["riː", "θɪŋk"], stress: 1, steps: "θ - θ - θɪ - θɪ - θɪŋk - ˌriːˈθɪŋk" },
             { w: "<b>mouth</b>", ipa_parts: ["maʊθ"], stress: 0, steps: "m - m - maʊ - maʊ - maʊθ" },
-            { w: "<b>there</b>fore", ipa_parts: ["ðer", "fɔːr"], stress: 0, secondary_stress: 1, steps: "ð - ð - ðer - ðer - ˈðer.ˌfɔːr" },
+            { w: "<b>there</b>fore", ipa_parts: ["ðer", "fɔːr"], stress: 0, steps: "ð - ð - ðer - ðer - ˈðer.ˌfɔːr" },
             { w: "them<b>selves</b>", ipa_parts: ["ðəm", "selvz"], stress: 1, steps: "s - s - se - se - selvz - ðəmˈselvz" },
             { w: "<b>weath</b>er", ipa_parts: ["weð", "ər"], stress: 0, steps: "w - w - we - we - weð - ˈweð.ər" },
             { w: "a<b>noth</b>er", ipa_parts: ["ə", "nʌð", "ər"], stress: 1, steps: "n - n - nʌ - nʌ - nʌð - nʌð.ər - əˈnʌð.ər" },
@@ -444,8 +434,8 @@
         { day: 34, title: "Light L / Dark L", words: [
             { w: "<b>lem</b>on", ipa_parts: ["lem", "ən"], stress: 0, steps: "l - l - le - le - lem - ˈlem.ən" },
             { w: "<b>lis</b>ten", ipa_parts: ["lɪs", "ən"], stress: 0, steps: "l - l - lɪ - lɪ - lɪs - ˈlɪs.ən" },
-            { w: "lo<b>ca</b>tion", ipa_parts: ["loʊ", "keɪ", "ʃən"], stress: 1, secondary_stress: 0, steps: "k - k - keɪ - keɪ - keɪ.ʃən - ˌloʊˈkeɪ.ʃən" },
-            { w: "po<b>lice</b>", ipa_parts: ["pə", "liːs"], stress: 1, steps: "l - l - liː - liː - liːs - pəˈliːs" },
+            { w: "lo<b>ca</b>tion", ipa_parts: ["loʊ", "keɪ", "ʃən"], stress: 1, steps: "k - k - keɪ - keɪ - keɪ.ʃən - ˌloʊˈkeɪ.ʃən" },
+            { w: "po<b>police</b>", ipa_parts: ["pə", "liːs"], stress: 1, steps: "l - l - liː - liː - liːs - pəˈliːs" },
             { w: "e<b>lev</b>en", ipa_parts: ["ə", "lev", "ən"], stress: 1, steps: "l - l - le - le - lev - lev.ən - əˈlev.ən" },
             { w: "<b>spoil</b>", ipa_parts: ["spɔɪl"], stress: 0, steps: "s - s - spɔɪ - spɔɪ - spɔɪl" },
             { w: "<b>lev</b>el", ipa_parts: ["lev", "əl"], stress: 0, steps: "l - l - le - le - lev - ˈlev.əl" },
@@ -461,9 +451,9 @@
             { w: "a<b>rrive</b>", ipa_parts: ["ə", "raɪv"], stress: 1, steps: "r - r - raɪ - raɪ - raɪv - əˈraɪv" },
             { w: "<b>wa</b>ter", ipa_parts: ["wɑ:", "tər"], stress: 0, steps: "w - w - wɑ: - wɑ: - ˈwɑ:.tər" },
             { w: "<b>weath</b>er", ipa_parts: ["weð", "ər"], stress: 0, steps: "w - w - we - we - weð - ˈweð.ər" },
-            { w: "<b>week</b>end", ipa_parts: ["wiːk", "end"], stress: 0, secondary_stress: 1, steps: "w - w - wiː - wiː - wiːk - ˈwiːk.ˌend" },
+            { w: "<b>week</b>end", ipa_parts: ["wiːk", "end"], stress: 0, steps: "w - w - wiː - wiː - wiːk - ˈwiːk.ˌend" },
             { w: "a<b>ware</b>", ipa_parts: ["ə", "wer"], stress: 1, steps: "w - w - wer - wer - əˈwer" },
-            { w: "<b>home</b>work", ipa_parts: ["hoʊm", "wɜ:rk"], stress: 0, secondary_stress: 1, steps: "h - h - hoʊ - hoʊ - hoʊm - ˈhoʊm.ˌwɜ:rk" }
+            { w: "<b>home</b>work", ipa_parts: ["hoʊm", "wɜ:rk"], stress: 0, steps: "h - h - hoʊ - hoʊ - hoʊm - ˈ도움.ˌwɜ:rk" }
         ]},
         { day: 36, title: "rl / Y", words: [
             { w: "<b>re</b>al", ipa_parts: ["riː", "əl"], stress: 0, steps: "r - r - riː - riː - ˈriː.əl" },
@@ -473,7 +463,7 @@
             { w: "<b>world</b>", ipa_parts: ["wɜ:rld"], stress: 0, steps: "w - w - wɜ:r - wɜ:r - wɜ:rld" },
             { w: "<b>yell</b>ow", ipa_parts: ["yel", "oʊ"], stress: 0, steps: "y - y - yel - yel - ˈyel.oʊ" },
             { w: "your<b>self</b>", ipa_parts: ["jər", "self"], stress: 1, steps: "s - s - se - se - self - jərˈself" },
-            { w: "u<b>nique</b>", ipa_parts: ["ju", "niːk"], stress: 1, secondary_stress: 0, steps: "n - n - niː - niː - niːk - ˌjuˈniːk" },
+            { w: "u<b>nique</b>", ipa_parts: ["ju", "niːk"], stress: 1, steps: "n - n - niː - niː - niːk - ˌjuˈniːk" },
             { w: "<b>val</b>ue", ipa_parts: ["væl", "juː"], stress: 0, steps: "v - v - væ - væ - væl - ˈvæl.juː" },
             { w: "<b>vol</b>ume", ipa_parts: ["vɑːl", "juːm"], stress: 0, steps: "v - v - vɑː - vɑː - vɑːl - ˈvɑːl.juːm" }
         ]},
@@ -572,6 +562,41 @@
             { w: "uni<b>ver</b>sity", ipa_parts: ["juː", "nə", "vɜːr", "sə", "t̬i"], stress: 2, steps: "v - v - vɜːr - vɜːr - vɜːr.sə - vɜːr.sə.t̬i - nə.vɜːr.sə.t̬i - juː.nə.vɜːr.sə.t̬i - ˌjuː.nəˈvɜːr.sə.t̬i" },
             { w: "cele<b>bra</b>tion", ipa_parts: ["sel", "ə", "breɪ", "ʃən"], stress: 2, steps: "b - b - bre - bre - breɪ - breɪ.ʃən - ə.breɪ.ʃən - sel.ə.breɪ.ʃən - ˌsel.əˈbreɪ.ʃən" },
             { w: "<b>dic</b>tionary", ipa_parts: ["dɪk", "ʃən", "er", "i"], stress: 0, steps: "d - d - dɪ - dɪ - dɪk - dɪk.ʃən - dɪk.ʃən.er - dɪk.ʃən.er.i - ˈdɪk.ʃən.er.i" }
+        ]},
+        { day: 45, title: "2음절 문장", words: [
+            { w: "It's <b>cold</b>", ipa_parts: ["ɪts", "koʊld"], stress: 1 },
+            { w: "<b>Why</b> me", ipa_parts: ["waɪ", "mi"], stress: 0 },
+            { w: "<b>Stay safe</b>", ipa_parts: ["steɪ", "seɪf"], stress: 0, secondary_stress: 1 },
+            { w: "I'm <b>full</b>", ipa_parts: ["aɪm", "ful"], stress: 1 },
+            { w: "She's <b>tall</b>", ipa_parts: ["ʃiz", "tɑːl"], stress: 1 },
+            { w: "<b>Study</b> hard", ipa_parts: ["ˈstʌdi", "hɑrd"], stress: 0, secondary_stress: 1 },
+            { w: "<b>Learn more</b>", ipa_parts: ["lɜ:rn", "mɔr"], stress: 0, secondary_stress: 1 },
+            { w: "<b>Play games</b>", ipa_parts: ["pleɪ", "ɡeɪmz"], stress: 0, secondary_stress: 1 },
+            { w: "<b>Eat well</b>", ipa_parts: ["it", "wel"], stress: 0, secondary_stress: 1 },
+            { w: "Be <b>kind</b>", ipa_parts: ["bi", "kaɪnd"], stress: 1 }
+        ]},
+        { day: 46, title: "3음절 문장", words: [
+            { w: "She <b>loves</b> me", ipa_parts: ["ʃi", "lʌvz", "mi"], stress: 1 },
+            { w: "<b>Cats hate dogs</b>", ipa_parts: ["kæts", "heɪt", "dɑːɡz"], stress: 0, secondary_stress: 1, third_stress: 2 },
+            { w: "You're <b>tall</b>", ipa_parts: ["jʊr", "tɑːl"], stress: 1 },
+            { w: "It <b>looks nice</b>", ipa_parts: ["ɪt", "lʊks", "naɪs"], stress: 1, secondary_stress: 2 },
+            { w: "<b>Birds</b> can <b>fly</b>", ipa_parts: ["bɜːrdz", "kən", "flaɪ"], stress: 0, secondary_stress: 2 },
+            { w: "She <b>plays well</b>", ipa_parts: ["ʃi", "pleɪz", "wel"], stress: 1, secondary_stress: 2 },
+            { w: "We <b>learn together</b>", ipa_parts: ["wi", "lɜːrn", "təˈɡeð.ər"], stress: 1, secondary_stress: 2 },
+            { w: "We <b>eat lunch</b>", ipa_parts: ["wi", "it", "lʌnʧ"], stress: 1, secondary_stress: 2 },
+            { w: "He <b>runs fast</b>", ipa_parts: ["hi", "rʌnz", "fæst"], stress: 1, secondary_stress: 2 },
+            { w: "They <b>read books</b>", ipa_parts: ["ðeɪ", "rid", "bʊks"], stress: 1, secondary_stress: 2 }
+        ]},
+        { day: 47, title: "4음절 문장", words: [
+            { w: "<b>Dog barks</b> at <b>night</b>", ipa_parts: ["dɑːɡ", "bɑrks", "ət", "naɪt"], stress: 0, secondary_stress: 1, third_stress: 3 },
+            { w: "He <b>reads</b> a <b>book</b>", ipa_parts: ["hi", "ridz", "ə", "bʊk"], stress: 1, secondary_stress: 3 },
+            { w: "The <b>sun sets</b> in <b>the <b>west</b>", ipa_parts: ["ðə", "sʌn", "sets", "ɪn", "ðə", "west"], stress: 1, secondary_stress: 2, third_stress: 5 },
+            { w: "<b>Flowers start</b> to <b>grow</b>", ipa_parts: ["ˈflaʊ.ərz", "stɑːrt", "tə", "ɡroʊ"], stress: 0, secondary_stress: 1, third_stress: 3 },
+            { w: "She <b>eats red apples</b>", ipa_parts: ["ʃi", "its", "red", "ˈæp.əlz"], stress: 1, secondary_stress: 2, third_stress: 3 },
+            { w: "He <b>runs very fast</b>", ipa_parts: ["hi", "rʌnz", "ˈver.i", "fæst"], stress: 1, secondary_stress: 2, third_stress: 3 },
+            { w: "I <b>see</b> a <b>bird</b>", ipa_parts: ["aɪ", "si", "ə", "bɜːrd"], stress: 1, secondary_stress: 3 },
+            { w: "We <b>learn new things</b>", ipa_parts: ["wi", "lɜːrn", "nu", "θɪŋz"], stress: 1, secondary_stress: 2, third_stress: 3 },
+            { w: "We <b>laugh</b> a <b>lot</b>", ipa_parts: ["wi", "læf", "ə", "lɑt"], stress: 1, secondary_stress: 3 }
         ]}
     ];
 
@@ -639,20 +664,17 @@
             audioGroup.classList.add('audio-btn-group');
             const plainWord = wordObj.w.replace(/<[^>]+>/g, '');
 
-            const btnNormal = document.createElement('button');
-            btnNormal.classList.add('audio-btn');
-            btnNormal.innerText = '1배속';
-            btnNormal.onclick = () => playWordAudio(plainWord, 1.0);
+            // 배속 버튼들 생성
+            const rates = [[1.0, '1배속'], [0.5, '0.5배속'], [0.25, '0.25배속']];
+            rates.forEach(([rate, label]) => {
+                const btn = document.createElement('button');
+                btn.classList.add('audio-btn');
+                btn.innerText = label;
+                btn.onclick = () => playWordAudio(plainWord, rate);
+                audioGroup.appendChild(btn);
+            });
 
-            const btnSlow = document.createElement('button');
-            btnSlow.classList.add('audio-btn');
-            btnSlow.innerText = '0.25배속';
-            btnSlow.onclick = () => playWordAudio(plainWord, 0.25);
-
-            audioGroup.appendChild(btnNormal);
-            audioGroup.appendChild(btnSlow);
             wordCol.appendChild(audioGroup);
-
             topSection.appendChild(wordCol);
 
             const syllableContainer = document.createElement('div');
@@ -663,10 +685,13 @@
                 card.classList.add('syllable-card');
                 card.innerText = ipaText;
                 
-                if (idx === wordObj.stress) {
+                // 강세 여부 체크 (Primary, Secondary, Third)
+                const isStrong = idx === wordObj.stress || 
+                                 (wordObj.secondary_stress !== undefined && idx === wordObj.secondary_stress) ||
+                                 (wordObj.third_stress !== undefined && idx === wordObj.third_stress);
+
+                if (isStrong) {
                     card.classList.add('syllable-strong');
-                } else if (wordObj.secondary_stress !== undefined && idx === wordObj.secondary_stress) {
-                    card.classList.add('syllable-secondary');
                 } else {
                     card.classList.add('syllable-weak');
                 }
@@ -676,7 +701,8 @@
             topSection.appendChild(syllableContainer);
             row.appendChild(topSection);
 
-            if (wordObj.steps) {
+            // Day 45~47이 아닌 경우에만 훈련 단계(steps) 표시
+            if (wordObj.steps && !(data.day >= 45 && data.day <= 47)) {
                 const stepBox = document.createElement('div');
                 stepBox.classList.add('step-box');
                 stepBox.innerHTML = `<span class="step-highlight">${wordObj.steps}</span>`;
@@ -705,14 +731,6 @@
         if (!audioContext) {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
             audioContext = new AudioContext();
-            
-            const emptySource = audioContext.createBufferSource();
-            if(audioContext.createBuffer) {
-                const buffer = audioContext.createBuffer(1, 1, 22050);
-                emptySource.buffer = buffer;
-                emptySource.connect(audioContext.destination);
-                emptySource.start(0);
-            }
             createNoiseBuffer();
         }
         if (audioContext.state === 'suspended') {
